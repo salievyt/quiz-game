@@ -45,7 +45,7 @@ class _CategoriesState extends State<Categories> {
                 },
                 child: Text("Начать играть", style: TextStyle(fontSize: 18),),
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
+                    backgroundColor: Color(0xFF7ED421),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),

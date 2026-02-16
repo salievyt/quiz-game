@@ -18,7 +18,7 @@ class _QuizState extends State<Quiz> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text("Quiz", style: TextStyle(fontSize: 26,fontFamily: GoogleFonts.sen().fontFamily, fontWeight: FontWeight.bold),),
+        title: Text("Quizzy", style: TextStyle(fontSize: 26,fontFamily: GoogleFonts.sen().fontFamily, fontWeight: FontWeight.bold),),
         centerTitle: true,
       ),
       body: Column(
