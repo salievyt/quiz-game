@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/data/gamedata.dart';
@@ -22,17 +24,42 @@ class _GameState extends State<Game> {
     super.initState();
     _questions = GameData.getQuiz(widget.ID);
     _questions.shuffle();
-
+    _questions = _questions.take(12).toList();
     for (var q in _questions) {
       q.shuffleAnswers();
     }
   }
 
-  void _showAlertDialog(BuildContext context) {
+  void _showCupertinoExitDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
+          title: Text("Выйти из игры?"),
+          content: Text("Ваш прогресс будет потерян."),
+          actions: [
+            TextButton(
+              child: Text("Нет"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("Да"),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showMaterialExitDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
           title: Text("Выйти из игры?"),
           content: Text("Ваш прогресс будет потерян."),
           actions: [
@@ -64,15 +91,49 @@ class _GameState extends State<Game> {
         _currentIndex++;
       });
     } else {
-      _showResult();
+      if (Platform.isAndroid) {
+        _showMaterialResult();
+      } else if (Platform.isIOS) {
+        _showCupertinoResult();
+      }
     }
   }
 
-  void _showResult() {
+  void _showCupertinoResult() {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (_) => CupertinoAlertDialog(
+        title: const Text("Игра окончена 🎉"),
+        content: Text("Ваш результат: $_score из ${_questions.length}"),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              setState(() {
+                _currentIndex = 0;
+                _score = 0;
+              });
+            },
+            child: const Text("Играть снова"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: const Text("Выйти"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showMaterialResult() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
         title: const Text("Игра окончена 🎉"),
         content: Text("Ваш результат: $_score из ${_questions.length}"),
         actions: [
@@ -108,7 +169,13 @@ class _GameState extends State<Game> {
         title: const Text("Игра"),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () => _showAlertDialog(context),
+          onPressed: () {
+            if(Platform.isAndroid){
+              _showMaterialExitDialog(context);
+            }else if(Platform.isIOS){
+              _showCupertinoExitDialog(context);
+            }
+          },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),

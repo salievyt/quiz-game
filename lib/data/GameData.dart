@@ -1,16 +1,106 @@
 import '../models/question.dart';
 
 class GameData {
-  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей"];
-  final List<int> gameIds = [1, 2, 3];
+  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети"];
+  final List<int> gameIds = [1, 2, 3, 4, 5, 6 ,7 ,8];
   final List<String> images = [
     "https://i.ibb.co/k2fJzLgx/logic.jpg",
     "https://i.ibb.co/TxcY9GVk/Geeks.jpg",
-    "https://i.ibb.co/zWPLDptZ/jun.jpg"
+    "https://i.ibb.co/zWPLDptZ/jun.jpg",
+    "",
+    "",
+    "",
+    "",
+    ""
   ];
 
   static final List<Question> _quizLogic = [
+    Question(question: "Что будет следующим числом: 2, 4, 8, 16, ?", answers: ["32", "24", "18", "30"], correctIndex: 0),
+    Question(question: "Продолжи ряд: 1, 1, 2, 3, 5, ?", answers: ["8", "6", "7", "10"], correctIndex: 0),
+    Question(question: "Что тяжелее: 1 кг железа или 1 кг ваты?", answers: ["Одинаково", "Железо", "Вата", "Зависит от плотности"], correctIndex: 0),
+    Question(question: "У тебя 3 яблока, ты взял 2. Сколько у тебя?", answers: ["2", "1", "3", "5"], correctIndex: 0),
+    Question(question: "Сколько граней у куба?", answers: ["6", "8", "4", "12"], correctIndex: 0),
+    Question(question: "Если сегодня понедельник, какой день будет через 14 дней?", answers: ["Понедельник", "Вторник", "Среда", "Воскресенье"], correctIndex: 0),
+    Question(question: "Сколько будет 9 × 9?", answers: ["81", "72", "99", "90"], correctIndex: 0),
+    Question(question: "Сколько нулей в числе миллион?", answers: ["6", "5", "4", "7"], correctIndex: 0),
+    Question(question: "Если все А — это Б, а все Б — это В, то все А — это?", answers: ["В", "Б", "Ничего", "А"], correctIndex: 0),
+    Question(question: "Сколько минут в 2 часах?", answers: ["120", "100", "90", "60"], correctIndex: 0),
 
+    Question(question: "Продолжи: 3, 6, 12, 24, ?", answers: ["48", "36", "30", "60"], correctIndex: 0),
+    Question(question: "Сколько сторон у пятиугольника?", answers: ["5", "6", "4", "8"], correctIndex: 0),
+    Question(question: "Если 5 машин делают 5 деталей за 5 минут, сколько нужно машин, чтобы сделать 100 деталей за 100 минут?", answers: ["5", "100", "20", "10"], correctIndex: 0),
+    Question(question: "Что не имеет начала и конца?", answers: ["Круг", "Отрезок", "Квадрат", "Линия с точками"], correctIndex: 0),
+    Question(question: "Сколько будет 15 ÷ 3?", answers: ["5", "3", "6", "4"], correctIndex: 0),
+    Question(question: "Сколько дней в невисокосном году?", answers: ["365", "366", "364", "360"], correctIndex: 0),
+    Question(question: "Продолжи: 10, 9, 8, 7, ?", answers: ["6", "5", "4", "3"], correctIndex: 0),
+    Question(question: "Сколько сторон у треугольника?", answers: ["3", "4", "2", "5"], correctIndex: 0),
+    Question(question: "Если 2+2×2 = ?", answers: ["6", "8", "4", "12"], correctIndex: 0),
+    Question(question: "Сколько будет 100 − 45?", answers: ["55", "65", "45", "50"], correctIndex: 0),
+
+    Question(question: "Сколько часов в сутках?", answers: ["24", "12", "48", "60"], correctIndex: 0),
+    Question(question: "Если поезд едет 60 км/ч, сколько он проедет за 2 часа?", answers: ["120 км", "60 км", "100 км", "90 км"], correctIndex: 0),
+    Question(question: "Сколько будет 7²?", answers: ["49", "14", "21", "36"], correctIndex: 0),
+    Question(question: "Сколько вершин у куба?", answers: ["8", "6", "12", "4"], correctIndex: 0),
+    Question(question: "Сколько месяцев в году?", answers: ["12", "10", "11", "13"], correctIndex: 0),
+    Question(question: "Продолжи: 5, 10, 20, 40, ?", answers: ["80", "60", "100", "120"], correctIndex: 0),
+    Question(question: "Сколько секунд в минуте?", answers: ["60", "30", "90", "100"], correctIndex: 0),
+    Question(question: "Сколько углов у квадрата?", answers: ["4", "3", "5", "6"], correctIndex: 0),
+    Question(question: "Сколько будет 11 × 11?", answers: ["121", "111", "101", "131"], correctIndex: 0),
+    Question(question: "Сколько будет 144 ÷ 12?", answers: ["12", "14", "10", "16"], correctIndex: 0),
+
+    Question(question: "Сколько сторон у круга?", answers: ["0", "1", "2", "4"], correctIndex: 0),
+    Question(question: "Сколько дней в феврале в обычный год?", answers: ["28", "29", "30", "31"], correctIndex: 0),
+    Question(question: "Если 3×4 = 12, то 4×3 = ?", answers: ["12", "7", "16", "10"], correctIndex: 0),
+    Question(question: "Сколько будет 50% от 200?", answers: ["100", "50", "150", "200"], correctIndex: 0),
+    Question(question: "Сколько будет 0 × 1000?", answers: ["0", "1000", "1", "Ошибка"], correctIndex: 0),
+    Question(question: "Сколько будет 10³?", answers: ["1000", "100", "10", "10000"], correctIndex: 0),
+    Question(question: "Если 1 метр = 100 см, то 3 метра = ?", answers: ["300 см", "30 см", "3 см", "100 см"], correctIndex: 0),
+    Question(question: "Сколько градусов в прямом угле?", answers: ["90", "45", "180", "60"], correctIndex: 0),
+    Question(question: "Сколько будет 25 × 4?", answers: ["100", "75", "50", "120"], correctIndex: 0),
+    Question(question: "Сколько будет 81 ÷ 9?", answers: ["9", "8", "7", "6"], correctIndex: 0),
+
+    Question(question: "Сколько диагоналей у квадрата?", answers: ["2", "4", "1", "3"], correctIndex: 0),
+    Question(question: "Сколько будет 6²?", answers: ["36", "12", "30", "42"], correctIndex: 0),
+    Question(question: "Если 8×5 = ?", answers: ["40", "35", "45", "30"], correctIndex: 0),
+    Question(question: "Сколько будет 1000 ÷ 10?", answers: ["100", "10", "1000", "1"], correctIndex: 0),
+    Question(question: "Сколько будет 3³?", answers: ["27", "9", "18", "21"], correctIndex: 0),
+    Question(question: "Сколько сторон у шестиугольника?", answers: ["6", "5", "7", "8"], correctIndex: 0),
+    Question(question: "Сколько будет 18 ÷ 2?", answers: ["9", "8", "6", "10"], correctIndex: 0),
+    Question(question: "Сколько будет 4²?", answers: ["16", "8", "12", "20"], correctIndex: 0),
+    Question(question: "Сколько будет 13 + 7?", answers: ["20", "19", "18", "21"], correctIndex: 0),
+    Question(question: "Сколько будет 90 − 30?", answers: ["60", "50", "40", "70"], correctIndex: 0),
+
+    Question(question: "Сколько будет 5³?", answers: ["125", "25", "75", "100"], correctIndex: 0),
+    Question(question: "Сколько будет 7×8?", answers: ["56", "48", "54", "64"], correctIndex: 0),
+    Question(question: "Сколько будет 200 ÷ 4?", answers: ["50", "40", "25", "100"], correctIndex: 0),
+    Question(question: "Сколько будет 16 ÷ 4?", answers: ["4", "2", "8", "6"], correctIndex: 0),
+    Question(question: "Сколько будет 14 × 2?", answers: ["28", "26", "24", "30"], correctIndex: 0),
+    Question(question: "Сколько будет 36 ÷ 6?", answers: ["6", "5", "4", "7"], correctIndex: 0),
+    Question(question: "Сколько будет 12²?", answers: ["144", "122", "124", "132"], correctIndex: 0),
+    Question(question: "Сколько будет 45 + 55?", answers: ["100", "90", "95", "110"], correctIndex: 0),
+    Question(question: "Сколько будет 64 ÷ 8?", answers: ["8", "6", "7", "9"], correctIndex: 0),
+    Question(question: "Сколько будет 9³?", answers: ["729", "81", "243", "512"], correctIndex: 0),
+    Question(question: "Если все кошки — животные, а Мурка — кошка, то Мурка это...",answers: ["Животное", "Собака", "Птица", "Рыба"], correctIndex: 0,),
+    Question(question: "У тебя 3 яблока, ты взял 2. Сколько у тебя?", answers: ["2", "1", "3", "5"], correctIndex: 0,),
+    Question(question: "Что тяжелее: 1 кг железа или 1 кг ваты?", answers: ["Одинаково", "Железо", "Вата", "Зависит от плотности"], correctIndex: 0,),
+    Question(question: "Продолжи ряд: 1, 1, 2, 3, 5, ?", answers: ["8", "7", "6", "10"], correctIndex: 0,),
+    Question(question: "Сколько граней у куба?", answers: ["6", "4", "8", "12"], correctIndex: 0,),
+    Question(question: "Если сегодня понедельник, какой день будет через 10 дней?", answers: ["Четверг", "Среда", "Пятница", "Воскресенье"], correctIndex: 0,),
+    Question(
+      question: "Что не имеет начала и конца?",
+      answers: ["Круг", "Линия", "Отрезок", "Квадрат"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Сколько будет 9 × 9?",
+      answers: ["81", "72", "99", "90"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Если 5 машин делают 5 деталей за 5 минут, сколько нужно машин, чтобы сделать 100 деталей за 100 минут?",
+      answers: ["5", "100", "10", "20"],
+      correctIndex: 0,
+    ),
     Question(
       question: "Что лишнее: 2, 4, 6, 9, 10?",
       answers: ["2", "4", "6", "9"],
@@ -83,171 +173,677 @@ class GameData {
       correctIndex: 2,
     ),
   ];
-
   static final List<Question> _quizGeeks = [
+    Question(question: "В каком году была основана академия Geeks", answers: ["2018","2024","2020","2022"], correctIndex: 0),
+    Question(question: "Кто создал язык Python?", answers: ["Гвидо ван Россум", "Билл Гейтс", "Илон Маск", "Линус Торвальдс"], correctIndex: 0),
+    Question(question: "Какой язык используется во Flutter?", answers: ["Dart", "Java", "Swift", "Kotlin"], correctIndex: 0),
+    Question(question: "Что означает HTML?", answers: ["HyperText Markup Language", "HighText Machine Language", "Hyper Transfer Main Language", "Home Tool Markup Language"], correctIndex: 0),
+    Question(question: "Что означает CSS?", answers: ["Cascading Style Sheets", "Computer Style System", "Creative Style Syntax", "Colorful Sheet System"], correctIndex: 0),
+    Question(question: "Что означает CPU?", answers: ["Central Processing Unit", "Computer Personal Unit", "Core Power Unit", "Central Power Utility"], correctIndex: 0),
+    Question(question: "Что означает RAM?", answers: ["Random Access Memory", "Rapid Action Memory", "Read Access Mode", "Run Active Memory"], correctIndex: 0),
+    Question(question: "Кто создал Linux?", answers: ["Линус Торвальдс", "Стив Джобс", "Марк Цукерберг", "Илон Маск"], correctIndex: 0),
+    Question(question: "Какой язык используется для Android (официально)?", answers: ["Kotlin", "Swift", "Dart", "Ruby"], correctIndex: 0),
+    Question(question: "Какой язык используется для iOS?", answers: ["Swift", "Kotlin", "Java", "C#"], correctIndex: 0),
+    Question(question: "Что такое API?", answers: ["Интерфейс взаимодействия программ", "Тип процессора", "База данных", "Операционная система"], correctIndex: 0),
+
+    Question(question: "Что такое Git?", answers: ["Система контроля версий", "Язык программирования", "База данных", "Фреймворк"], correctIndex: 0),
+    Question(question: "Команда для загрузки проекта в GitHub?", answers: ["git push", "git run", "git start", "git build"], correctIndex: 0),
+    Question(question: "Что такое backend?", answers: ["Серверная часть приложения", "Дизайн интерфейса", "Иконки", "Шрифты"], correctIndex: 0),
+    Question(question: "Что такое frontend?", answers: ["Клиентская часть интерфейса", "База данных", "Сервер", "API"], correctIndex: 0),
+    Question(question: "Что такое SQL?", answers: ["Язык запросов к базе данных", "Язык дизайна", "Фреймворк", "Браузер"], correctIndex: 0),
+    Question(question: "Самая популярная ОС для ПК?", answers: ["Windows", "Linux", "macOS", "Ubuntu"], correctIndex: 0),
+    Question(question: "Что такое облачные вычисления?", answers: ["Хранение и обработка данных в интернете", "Работа процессора", "Игровой режим", "Флешка"], correctIndex: 0),
+    Question(question: "Что такое баг?", answers: ["Ошибка в программе", "Функция", "Дизайн", "Файл"], correctIndex: 0),
+    Question(question: "Что такое алгоритм?", answers: ["Последовательность действий", "Картинка", "Сервер", "Шрифт"], correctIndex: 0),
+    Question(question: "Что такое IDE?", answers: ["Среда разработки", "Браузер", "Антивирус", "Процессор"], correctIndex: 0),
+
+    Question(question: "Что означает HTTP?", answers: ["HyperText Transfer Protocol", "HighText Transfer Program", "Hyper Tool Transfer Protocol", "Home Transfer Type Protocol"], correctIndex: 0),
+    Question(question: "Что означает HTTPS?", answers: ["Безопасный HTTP", "Быстрый HTTP", "Приватный сервер", "Тип браузера"], correctIndex: 0),
+    Question(question: "Что такое JSON?", answers: ["Формат обмена данными", "База данных", "Язык программирования", "CMS"], correctIndex: 0),
+    Question(question: "Что такое Firebase?", answers: ["Платформа для разработки приложений", "Язык программирования", "Процессор", "Браузер"], correctIndex: 0),
+    Question(question: "Что такое искусственный интеллект?", answers: ["Система, имитирующая мышление человека", "База данных", "Дизайн", "Файл"], correctIndex: 0),
+    Question(question: "Что такое машинное обучение?", answers: ["Метод обучения ИИ на данных", "Создание сайта", "Верстка", "Анимация"], correctIndex: 0),
+    Question(question: "Что такое блокчейн?", answers: ["Цепочка блоков данных", "Процессор", "Фреймворк", "CMS"], correctIndex: 0),
+    Question(question: "Что такое криптовалюта?", answers: ["Цифровая валюта", "Процессор", "Файл", "Программа"], correctIndex: 0),
+    Question(question: "Самый популярный язык веба?", answers: ["JavaScript", "Python", "C++", "Swift"], correctIndex: 0),
+    Question(question: "Что такое React?", answers: ["JavaScript библиотека", "База данных", "Процессор", "Сервер"], correctIndex: 0),
+
+    Question(question: "Что такое Flutter?", answers: ["Фреймворк для кроссплатформенной разработки", "Язык", "Процессор", "Антивирус"], correctIndex: 0),
+    Question(question: "Что такое Dart?", answers: ["Язык программирования", "Фреймворк", "Браузер", "CMS"], correctIndex: 0),
+    Question(question: "Что такое сервер?", answers: ["Компьютер, обрабатывающий запросы", "Телефон", "Ноутбук", "Монитор"], correctIndex: 0),
+    Question(question: "Что такое домен?", answers: ["Имя сайта", "Процессор", "Файл", "Программа"], correctIndex: 0),
+    Question(question: "Что такое хостинг?", answers: ["Место размещения сайта", "Шрифт", "Иконка", "База данных"], correctIndex: 0),
+    Question(question: "Что такое VPN?", answers: ["Защищённое подключение", "Браузер", "Язык", "CMS"], correctIndex: 0),
+    Question(question: "Что такое кибербезопасность?", answers: ["Защита данных и систем", "Дизайн", "Верстка", "Шрифт"], correctIndex: 0),
+    Question(question: "Что такое open source?", answers: ["Открытый исходный код", "Закрытый код", "Антивирус", "CMS"], correctIndex: 0),
+    Question(question: "Что такое SaaS?", answers: ["Программное обеспечение как сервис", "Тип сервера", "Язык", "Процессор"], correctIndex: 0),
+    Question(question: "Что такое DevOps?", answers: ["Подход объединяющий разработку и эксплуатацию", "Дизайн", "Верстка", "UI стиль"], correctIndex: 0),
+
+    Question(question: "Что такое бинарный код?", answers: ["Система из 0 и 1", "Шрифт", "Файл", "CMS"], correctIndex: 0),
+    Question(question: "Сколько бит в одном байте?", answers: ["8", "4", "16", "2"], correctIndex: 0),
+    Question(question: "Что такое фреймворк?", answers: ["Набор инструментов для разработки", "База данных", "Процессор", "Файл"], correctIndex: 0),
+    Question(question: "Что такое кэш?", answers: ["Временное хранилище данных", "Язык", "Сервер", "Монитор"], correctIndex: 0),
+    Question(question: "Что такое localhost?", answers: ["Локальный сервер", "Браузер", "API", "Фреймворк"], correctIndex: 0),
+    Question(question: "Что такое компиляция?", answers: ["Преобразование кода в машинный", "Удаление файла", "Верстка", "Анимация"], correctIndex: 0),
+    Question(question: "Что такое переменная?", answers: ["Хранилище значения", "Файл", "Сервер", "База данных"], correctIndex: 0),
+    Question(question: "Что такое цикл в программировании?", answers: ["Повторение действий", "Файл", "Сервер", "CSS стиль"], correctIndex: 0),
+    Question(question: "Что такое условный оператор?", answers: ["Проверка условия", "Дизайн", "Иконка", "Файл"], correctIndex: 0),
+    Question(question: "Что такое массив?", answers: ["Набор элементов", "Процессор", "Сервер", "Шрифт"], correctIndex: 0),
+
+    Question(question: "Что такое база данных?", answers: ["Хранилище информации", "Дизайн", "Верстка", "Фреймворк"], correctIndex: 0),
+    Question(question: "Что такое NoSQL?", answers: ["Нереляционная база данных", "Язык", "CSS", "API"], correctIndex: 0),
+    Question(question: "Что такое кроссплатформенность?", answers: ["Работа на разных ОС", "Тип процессора", "Файл", "Монитор"], correctIndex: 0),
+    Question(question: "Что такое push-уведомление?", answers: ["Сообщение от приложения", "Файл", "Шрифт", "CSS"], correctIndex: 0),
+    Question(question: "Что такое тестирование?", answers: ["Проверка работы программы", "Дизайн", "Иконка", "Анимация"], correctIndex: 0),
+    Question(question: "Что такое CI/CD?", answers: ["Автоматизация сборки и доставки кода", "Шрифт", "CMS", "Процессор"], correctIndex: 0),
+    Question(question: "Что такое хакер?", answers: ["Специалист по взлому или безопасности", "Дизайнер", "Верстальщик", "SEO специалист"], correctIndex: 0),
+    Question(question: "Что такое фишинг?", answers: ["Мошенничество через поддельные сайты", "API", "Фреймворк", "Шрифт"], correctIndex: 0),
+    Question(question: "Что такое токен?", answers: ["Ключ доступа", "Файл", "Монитор", "Сервер"], correctIndex: 0),
+    Question(question: "Что такое GitHub?", answers: ["Платформа для хранения кода", "Язык", "Процессор", "Антивирус"], correctIndex: 0),
+  ];
+  static final List<Question> _quizJunior = [
+    Question(question: "Сколько будет 2 + 3?", answers: ["5", "4", "6", "7"], correctIndex: 0),
+    Question(question: "Какого цвета небо в ясный день?", answers: ["Голубое", "Зелёное", "Красное", "Фиолетовое"], correctIndex: 0),
+    Question(question: "Сколько дней в неделе?", answers: ["7", "5", "6", "8"], correctIndex: 0),
+    Question(question: "Кто говорит 'мяу'?", answers: ["Кошка", "Собака", "Корова", "Овца"], correctIndex: 0),
+    Question(question: "Сколько месяцев в году?", answers: ["12", "10", "11", "13"], correctIndex: 0),
+    Question(question: "Сколько будет 10 - 4?", answers: ["6", "5", "4", "7"], correctIndex: 0),
+    Question(question: "Как называется планета, на которой мы живём?", answers: ["Земля", "Марс", "Юпитер", "Луна"], correctIndex: 0),
+    Question(question: "Сколько у человека пальцев на одной руке?", answers: ["5", "4", "6", "10"], correctIndex: 0),
+    Question(question: "Какой цвет получается при смешении красного и жёлтого?", answers: ["Оранжевый", "Фиолетовый", "Зелёный", "Синий"], correctIndex: 0),
+    Question(question: "Сколько будет 3 × 3?", answers: ["9", "6", "12", "8"], correctIndex: 0),
+
+    Question(question: "Кто живёт в воде?", answers: ["Рыба", "Кошка", "Лев", "Курица"], correctIndex: 0),
+    Question(question: "Сколько у паука ног?", answers: ["8", "6", "4", "10"], correctIndex: 0),
+    Question(question: "Сколько будет 15 + 5?", answers: ["20", "15", "10", "25"], correctIndex: 0),
+    Question(question: "Как называется детёныш собаки?", answers: ["Щенок", "Котёнок", "Теленок", "Птенец"], correctIndex: 0),
+    Question(question: "Сколько часов в сутках?", answers: ["24", "12", "48", "60"], correctIndex: 0),
+    Question(question: "Какой сегодня сезон после зимы?", answers: ["Весна", "Осень", "Лето", "Новый год"], correctIndex: 0),
+    Question(question: "Сколько будет 7 + 8?", answers: ["15", "14", "16", "13"], correctIndex: 0),
+    Question(question: "Как называется самый большой океан?", answers: ["Тихий", "Атлантический", "Индийский", "Северный"], correctIndex: 0),
+    Question(question: "Сколько будет 100 - 50?", answers: ["50", "40", "60", "30"], correctIndex: 0),
+    Question(question: "Как называется дом для птиц?", answers: ["Гнездо", "Нора", "Берлога", "Будка"], correctIndex: 0),
+
+    Question(question: "Сколько будет 8 × 2?", answers: ["16", "14", "18", "12"], correctIndex: 0),
+    Question(question: "Сколько дней в феврале в обычный год?", answers: ["28", "29", "30", "31"], correctIndex: 0),
+    Question(question: "Кто быстрее: черепаха или заяц?", answers: ["Заяц", "Черепаха", "Одинаково", "Слон"], correctIndex: 0),
+    Question(question: "Сколько будет 9 + 1?", answers: ["10", "9", "11", "12"], correctIndex: 0),
+    Question(question: "Как называется самый горячий сезон?", answers: ["Лето", "Зима", "Весна", "Осень"], correctIndex: 0),
+    Question(question: "Сколько будет 6 × 5?", answers: ["30", "25", "35", "40"], correctIndex: 0),
+    Question(question: "Как называется столица Франции?", answers: ["Париж", "Лондон", "Берлин", "Рим"], correctIndex: 0),
+    Question(question: "Сколько будет 18 ÷ 2?", answers: ["9", "8", "7", "6"], correctIndex: 0),
+    Question(question: "Сколько ног у кошки?", answers: ["4", "2", "6", "8"], correctIndex: 0),
+    Question(question: "Сколько будет 11 + 9?", answers: ["20", "19", "18", "21"], correctIndex: 0),
+
+    Question(question: "Какой цвет трава?", answers: ["Зелёный", "Синий", "Красный", "Жёлтый"], correctIndex: 0),
+    Question(question: "Сколько будет 4 × 4?", answers: ["16", "12", "20", "14"], correctIndex: 0),
+    Question(question: "Как называется самая большая планета?", answers: ["Юпитер", "Марс", "Венера", "Земля"], correctIndex: 0),
+    Question(question: "Сколько будет 30 - 10?", answers: ["20", "10", "15", "25"], correctIndex: 0),
+    Question(question: "Сколько будет 5 × 6?", answers: ["30", "25", "35", "40"], correctIndex: 0),
+    Question(question: "Кто даёт молоко?", answers: ["Корова", "Собака", "Кошка", "Курица"], correctIndex: 0),
+    Question(question: "Сколько будет 100 ÷ 10?", answers: ["10", "20", "5", "15"], correctIndex: 0),
+    Question(question: "Как называется спутник Земли?", answers: ["Луна", "Марс", "Солнце", "Юпитер"], correctIndex: 0),
+    Question(question: "Сколько будет 12 + 8?", answers: ["20", "18", "22", "24"], correctIndex: 0),
+    Question(question: "Какой день идёт после пятницы?", answers: ["Суббота", "Воскресенье", "Четверг", "Понедельник"], correctIndex: 0),
+
+    Question(question: "Сколько будет 25 + 25?", answers: ["50", "40", "45", "55"], correctIndex: 0),
+    Question(question: "Как называется прибор для измерения времени?", answers: ["Часы", "Термометр", "Линейка", "Весы"], correctIndex: 0),
+    Question(question: "Сколько будет 14 × 2?", answers: ["28", "26", "24", "30"], correctIndex: 0),
+    Question(question: "Как называется самый холодный сезон?", answers: ["Зима", "Лето", "Весна", "Осень"], correctIndex: 0),
+    Question(question: "Сколько будет 16 ÷ 4?", answers: ["4", "2", "6", "8"], correctIndex: 0),
+    Question(question: "Сколько цветов у радуги?", answers: ["7", "6", "5", "8"], correctIndex: 0),
+    Question(question: "Сколько будет 9 × 5?", answers: ["45", "40", "35", "50"], correctIndex: 0),
+    Question(question: "Как называется дом для собаки?", answers: ["Будка", "Гнездо", "Берлога", "Нора"], correctIndex: 0),
+    Question(question: "Сколько будет 7 × 7?", answers: ["49", "42", "56", "35"], correctIndex: 0),
+    Question(question: "Как называется источник света днём?", answers: ["Солнце", "Луна", "Лампа", "Фонарь"], correctIndex: 0),
+
+    Question(question: "Сколько будет 80 - 30?", answers: ["50", "40", "60", "30"], correctIndex: 0),
+    Question(question: "Как называется маленький ребёнок кошки?", answers: ["Котёнок", "Щенок", "Цыплёнок", "Теленок"], correctIndex: 0),
+    Question(question: "Сколько будет 6 × 6?", answers: ["36", "30", "42", "32"], correctIndex: 0),
+    Question(question: "Сколько будет 45 ÷ 5?", answers: ["9", "8", "7", "6"], correctIndex: 0),
+    Question(question: "Сколько будет 13 + 7?", answers: ["20", "19", "18", "21"], correctIndex: 0),
+    Question(question: "Как называется прибор для измерения температуры?", answers: ["Термометр", "Часы", "Линейка", "Весы"], correctIndex: 0),
+    Question(question: "Сколько будет 100 - 25?", answers: ["75", "70", "80", "85"], correctIndex: 0),
+    Question(question: "Сколько будет 8 × 8?", answers: ["64", "56", "72", "48"], correctIndex: 0),
+    Question(question: "Как называется место, где учатся дети?", answers: ["Школа", "Больница", "Магазин", "Банк"], correctIndex: 0),
+    Question(question: "Сколько будет 90 ÷ 9?", answers: ["10", "9", "8", "11"], correctIndex: 0),
+  ];
+  static final List<Question> _quizIslam = [
+    Question(
+        question: "Как называется священная книга мусульман?",
+        answers: ["Коран", "Библия", "Тора", "Веды"],
+        correctIndex: 0),
+    Question(
+        question: "Сколько раз в день мусульмане должны молиться?",
+        answers: ["5", "3", "7", "1"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется месяц поста в исламе?",
+        answers: ["Рамадан", "Мухаррам", "Шавваль", "Зуль-Хиджа"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется праздник после Рамадана?",
+        answers: ["Ид аль-Фитр", "Ид аль-Адха", "Мавлид", "Лейлат аль-Кадр"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется место молитвы мусульман?",
+        answers: ["Мечеть", "Синагога", "Храм", "Церковь"],
+        correctIndex: 0),
+    Question(
+        question: "Кто является последним пророком в исламе?",
+        answers: ["Мухаммад", "Иса", "Муса", "Ибрагим"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется паломничество в Мекку?",
+        answers: ["Хадж", "Умра", "Салаф", "Джихад"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане читают во время молитвы?",
+        answers: ["Суры из Корана", "Библию", "Тору", "Мантры"],
+        correctIndex: 0),
+    Question(
+        question: "Сколько столпов в исламе?",
+        answers: ["5", "6", "4", "3"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане приветствуют друг друга?",
+        answers: ["Ассаляму алейкум", "Привет", "Салам", "Аллах Акбар"],
+        correctIndex: 0),
 
     Question(
-      question: "Кто создал Flutter?",
-      answers: ["Apple", "Google", "Microsoft", "Meta"],
-      correctIndex: 1,
-    ),
+        question: "Что означает слово 'Аллах'?",
+        answers: ["Бог", "Молоко", "Свет", "Пророк"],
+        correctIndex: 0),
+    Question(
+        question: "Какой ангел передал Коран Мухаммаду?",
+        answers: ["Джибрил", "Микаил", "Азраил", "Исрафил"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают в пятницу?",
+        answers: ["Совершают Джум’а молитву", "Постятся", "Идут в школу", "Смотрят ТВ"],
+        correctIndex: 0),
+    Question(
+        question: "Что запрещено мусульманам есть?",
+        answers: ["Свиное мясо", "Рыбу", "Яйца", "Фрукты"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется исламский годовой календарь?",
+        answers: ["Хиджра", "Григорианский", "Юлианский", "Мусульманский"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане называют день, когда Бог судит людей?",
+        answers: ["День воскресения", "Пятница", "Рамадан", "Ид"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане читают в день Рамадана?",
+        answers: ["Коран", "Библию", "Тору", "Мантры"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают перед молитвой?",
+        answers: ["Омовение (вуду)", "Чистят зубы", "Едят", "Спят"],
+        correctIndex: 0),
+    Question(
+        question: "Какая священная Кааба находится в…?",
+        answers: ["Мекка", "Медина", "Иерусалим", "Дамаск"],
+        correctIndex: 0),
+    Question(
+        question: "Какой город считается вторым священным в исламе?",
+        answers: ["Медина", "Мекка", "Дамаск", "Иерусалим"],
+        correctIndex: 0),
 
     Question(
-      question: "Какой язык используется во Flutter?",
-      answers: ["Java", "Kotlin", "Dart", "Swift"],
-      correctIndex: 2,
-    ),
+        question: "Что мусульмане делают во время хаджа у Каабы?",
+        answers: ["Обходят Каабу семь раз", "Пьют воду", "Постятся", "Поют песни"],
+        correctIndex: 0),
+    Question(
+        question: "Что означает слово 'Сура'?",
+        answers: ["Глава Корана", "Пророк", "Праздник", "Молитва"],
+        correctIndex: 0),
+    Question(
+        question: "Кто был первым пророком в исламе?",
+        answers: ["Адам", "Мухаммад", "Ибрагим", "Муса"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется исламский праздник жертвоприношения?",
+        answers: ["Ид аль-Адха", "Ид аль-Фитр", "Мавлид", "Рамадан"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают в Лейлат аль-Кадр?",
+        answers: ["Молятся и читают Коран", "Спят весь день", "Путешествуют", "Едят сладости"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане дарят на Ид аль-Фитр?",
+        answers: ["Подарки и сладости", "Только деньги", "Книги", "Игрушки"],
+        correctIndex: 0),
+    Question(
+        question: "Сколько дней длится Рамадан?",
+        answers: ["29–30", "15", "40", "7"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется обязательный налог для мусульман?",
+        answers: ["Закят", "Хадж", "Садака", "Ид"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане называют пост в Рамадан?",
+        answers: ["Саум", "Закят", "Хадж", "Ид"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане читают перед сном?",
+        answers: ["Дуа (молитвы)", "Коран", "Библию", "Песни"],
+        correctIndex: 0),
 
     Question(
-      question: "Что такое IDE?",
-      answers: ["Среда разработки", "База данных", "Язык", "Браузер"],
+        question: "Кто был отцом Исмаила?",
+        answers: ["Ибрагим", "Мухаммад", "Адам", "Муса"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают после молитвы?",
+        answers: ["Дуа и благодарят Аллаха", "Едят", "Спят", "Читают газету"],
+        correctIndex: 0),
+    Question(
+        question: "Сколько лет было Мухаммаду, когда он получил откровение?",
+        answers: ["40", "20", "30", "50"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется пророк Иса в исламе?",
+        answers: ["Иса", "Иисус", "Муса", "Ибрагим"],
+        correctIndex: 0),
+    Question(
+        question: "Какая пища разрешена мусульманам?",
+        answers: ["Халяль", "Харам", "Любая", "Только фрукты"],
+        correctIndex: 0),
+    Question(
+        question: "Сколько молитв совершается ежедневно для детей (с 7 лет)?",
+        answers: ["5", "3", "1", "2"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется день общественного праздника мусульман?",
+        answers: ["Ид", "Хадж", "Рамадан", "Лейлат аль-Кадр"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают на пятничной молитве?",
+        answers: ["Слушают хутбу", "Играют", "Пьют чай", "Спят"],
+        correctIndex: 0),
+    Question(
+        question: "Какое животное считалось благословенным в исламе?",
+        answers: ["Верблюд", "Слон", "Лев", "Кошка"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане называют поклонение Аллаху?",
+        answers: ["Ибадат", "Саум", "Закят", "Хадж"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают в пятницу утром перед молитвой?",
+        answers: ["Готовятся и чистятся", "Спят", "Путешествуют", "Читают газету"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется молитва в середине дня?",
+        answers: ["Зухр", "Аср", "Магриб", "Иша"],
+        correctIndex: 0),
+    Question(
+        question: "Как называется последняя молитва дня?",
+        answers: ["Иша", "Фаджр", "Зухр", "Аср"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане называют обязательное паломничество?",
+        answers: ["Хадж", "Саум", "Закят", "Ид"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане читают для защиты от зла?",
+        answers: ["Суры и дуа", "Сказки", "Песни", "Стихи"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане выражают благодарность Аллаху?",
+        answers: ["Словами 'Альхамдулиллях'", "Песнями", "Рисунками", "Танцами"],
+        correctIndex: 0),
+    Question(
+        question: "Как мусульмане называют день жертвоприношения?",
+        answers: ["Ид аль-Адха", "Ид аль-Фитр", "Лейлат аль-Кадр", "Мавлид"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане читают, когда хотят попросить прощения?",
+        answers: ["Дуа", "Песни", "Сказки", "Стихи"],
+        correctIndex: 0),
+    Question(
+        question: "Что мусульмане делают в Рамадан, кроме поста?",
+        answers: ["Дают садака", "Спят", "Играют", "Пьют кофе"],
+        correctIndex: 0),
+  ];
+  static final List<Question> _quizDesigner = [
+    Question(question: "Что такое usability?", answers: ["Удобство использования", "Цветовая схема", "Анимация", "Логотип"], correctIndex: 0),
+    Question(question: "Что такое айдентика?", answers: ["Фирменный стиль бренда", "Тип кнопки", "Сервер", "База данных"], correctIndex: 0),
+    Question(question: "Что такое F-pattern?", answers: ["Паттерн чтения страницы", "Тип шрифта", "Формат изображения", "Градиент"], correctIndex: 0),
+    Question(question: "Что такое дизайн-система?", answers: ["Набор правил и компонентов", "Один экран", "Фотография", "CMS"], correctIndex: 0),
+    Question(question: "Какой принцип уменьшает когнитивную нагрузку?", answers: ["Минимализм", "Много текста", "Яркие цвета", "Случайные формы"], correctIndex: 0),
+    Question(question: "Что такое white space?", answers: ["Свободное пространство", "Белый цвет", "Фон сайта", "Шрифт"], correctIndex: 0),
+    Question(question: "Что такое A/B тест?", answers: ["Сравнение двух версий интерфейса", "Тип шрифта", "Градиент", "Анимация"], correctIndex: 0),
+    Question(question: "Что такое прототипирование?", answers: ["Создание модели интерфейса", "Кодинг", "SEO", "Тестирование сервера"], correctIndex: 0),
+    Question(question: "Что такое accessibility?", answers: ["Доступность для всех пользователей", "Яркие цвета", "Мобильная версия", "Логотип"], correctIndex: 0),
+    Question(question: "Какой формат лучше для фото?", answers: ["JPG", "SVG", "AI", "EPS"], correctIndex: 0),
+    Question(question: "Что такое иерархия в дизайне?", answers: ["Выделение важного", "Сетка", "Шрифт", "Иконка"], correctIndex: 0),
+    Question(question: "Что такое hover-состояние?", answers: ["Эффект при наведении", "Тип кнопки", "Фон", "Сетка"], correctIndex: 0),
+    Question(question: "Что такое dark mode?", answers: ["Тёмная тема интерфейса", "Тип шрифта", "Градиент", "База данных"], correctIndex: 0),
+    Question(question: "Что такое брендбук?", answers: ["Документ с правилами бренда", "Логотип", "Сервер", "CMS"], correctIndex: 0),
+    Question(question: "Что такое responsive design?", answers: ["Адаптация под разные устройства", "Анимация", "Фильтр", "SVG"], correctIndex: 0),
+    Question(question: "Что такое пиксель?", answers: ["Минимальная единица изображения", "Шрифт", "Формат", "Сетка"], correctIndex: 0),
+    Question(question: "Что такое onboarding?", answers: ["Введение пользователя в продукт", "Тип кнопки", "Сервер", "CMS"], correctIndex: 0),
+    Question(question: "Что такое microinteraction?", answers: ["Маленькая анимация отклика", "Фон", "Шрифт", "Логотип"], correctIndex: 0),
+    Question(question: "Что такое moodboard?", answers: ["Доска вдохновения", "Сетка", "CSS", "HTML"], correctIndex: 0),
+    Question(question: "Что такое UI kit?", answers: ["Набор готовых элементов интерфейса", "Сервер", "API", "База данных"], correctIndex: 0),
+    Question(question: "Что такое композиция?", answers: ["Расположение элементов", "Шрифт", "Файл", "CMS"], correctIndex: 0),
+    Question(question: "Что такое логотип?", answers: ["Графический символ бренда", "Шрифт", "Сетка", "Сервер"], correctIndex: 0),
+    Question(question: "Что такое favicon?", answers: ["Иконка вкладки сайта", "Логотип", "Фон", "Сетка"], correctIndex: 0),
+    Question(question: "Что такое mockup?", answers: ["Реалистичная презентация дизайна", "Файл CSS", "API", "Сервер"], correctIndex: 0),
+    Question(question: "Что такое дизайн-мышление?", answers: ["Подход к решению проблем через пользователя", "Тип шрифта", "Формат", "Градиент"], correctIndex: 0),
+    Question(question: "Что такое визуальный шум?", answers: ["Избыточные элементы в интерфейсе", "Градиент", "SVG", "API"], correctIndex: 0),
+    Question(question: "Что такое каркас сайта?", answers: ["Структура страниц", "Шрифт", "Фон", "Логотип"], correctIndex: 0),
+    Question(question: "Что такое UI-анимация?", answers: ["Движение элементов интерфейса", "CSS файл", "API", "CMS"], correctIndex: 0),
+    Question(question: "Что такое брендинг?", answers: ["Создание образа бренда", "Шрифт", "Формат", "API"], correctIndex: 0),
+    Question(question: "Что влияет на first impression?", answers: ["Визуальный стиль", "База данных", "Сервер", "Код backend"], correctIndex: 0),
+    Question(
+      question: "Что означает UX?",
+      answers: ["User Experience", "User Extension", "Universal X", "Ultra Experience"],
       correctIndex: 0,
     ),
-
     Question(
-      question: "Что делает setState?",
-      answers: ["Удаляет экран", "Обновляет UI", "Закрывает приложение", "Создаёт файл"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Какой виджет центрирует элемент?",
-      answers: ["Align", "Center", "Stack", "Padding"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Что такое Widget?",
-      answers: ["Кнопка", "Строительный блок UI", "Сервер", "Файл"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Как называется основной файл Flutter?",
-      answers: ["app.dart", "main.dart", "index.dart", "home.dart"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Как создать StatefulWidget?",
-      answers: ["class A {}", "stful", "new Widget()", "build()"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Что такое Navigator?",
-      answers: ["База данных", "Навигация между экранами", "Кнопка", "Пакет"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Что такое Git?",
-      answers: ["Фреймворк", "Система контроля версий", "База данных", "Язык"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Что такое API?",
-      answers: ["Интерфейс взаимодействия", "Язык", "Сервер", "Файл"],
+      question: "Что означает UI?",
+      answers: ["User Interface", "Universal Interface", "User Integration", "Ultra Interaction"],
       correctIndex: 0,
     ),
-
     Question(
-      question: "Какой метод запускает приложение?",
-      answers: ["run()", "startApp()", "runApp()", "init()"],
-      correctIndex: 2,
+      question: "Какой принцип означает 'не заставляй пользователя думать'?",
+      answers: ["Простота", "Контраст", "Анимация", "Градиент"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое wireframe?",
+      answers: ["Черновой макет", "Готовый дизайн", "Логотип", "Шрифт"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Figma — это?",
+      answers: ["Инструмент для дизайна интерфейсов", "Язык программирования", "CMS", "Браузер"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое прототип?",
+      answers: ["Интерактивная модель интерфейса", "Картинка", "CSS файл", "Иконка"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что делает UX дизайнер?",
+      answers: ["Проектирует пользовательский опыт", "Пишет backend", "Настраивает сервер", "Делает SEO"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что делает UI дизайнер?",
+      answers: ["Создаёт визуальный интерфейс", "Пишет код API", "Администрирует базу данных", "Тестирует сервер"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Какой цвет чаще используют для ошибок?",
+      answers: ["Красный", "Зелёный", "Синий", "Жёлтый"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Какой цвет ассоциируется с успехом?",
+      answers: ["Зелёный", "Красный", "Чёрный", "Серый"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое адаптивный дизайн?",
+      answers: ["Подстройка под разные экраны", "Яркий стиль", "3D графика", "Анимация"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое контраст в дизайне?",
+      answers: ["Различие элементов для читаемости", "Повтор цвета", "Сетка", "Шрифт"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Какой формат используют для векторной графики?",
+      answers: ["SVG", "JPG", "PNG", "MP4"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое типографика?",
+      answers: ["Работа со шрифтами", "Работа с видео", "Анимация", "3D"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое grid-сетка?",
+      answers: ["Система выравнивания элементов", "Шрифт", "Фильтр", "Иконка"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое CTA?",
+      answers: ["Призыв к действию", "Тип анимации", "Шрифт", "Сетка"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Какой принцип улучшает читаемость текста?",
+      answers: ["Достаточный межстрочный интервал", "Мелкий шрифт", "Много цветов", "Случайный размер"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое user flow?",
+      answers: ["Путь пользователя", "Цветовая схема", "Файл дизайна", "Шрифт"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Что такое MVP?",
+      answers: ["Минимально жизнеспособный продукт", "Максимальный визуальный проект", "Модель визуального процесса", "Маркетинговый план"],
+      correctIndex: 0,
+    ),
+    Question(
+      question: "Какой шрифт без засечек?",
+      answers: ["Sans-serif", "Serif", "Script", "Blackletter"],
+      correctIndex: 0,
     ),
   ];
-
-  static final List<Question> _quizJunior = [
-
-    Question(
-      question: "Сколько будет 2 + 2?",
-      answers: ["3", "4", "5", "6"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Какого цвета небо?",
-      answers: ["Зелёное", "Синее", "Красное", "Чёрное"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Сколько ног у кошки?",
-      answers: ["2", "3", "4", "5"],
-      correctIndex: 2,
-    ),
-
-    Question(
-      question: "Сколько дней в неделе?",
-      answers: ["5", "6", "7", "8"],
-      correctIndex: 2,
-    ),
-
-    Question(
-      question: "Какой месяц идёт после января?",
-      answers: ["Март", "Февраль", "Апрель", "Май"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Сколько будет 5 - 2?",
-      answers: ["2", "3", "4", "5"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Сколько глаз у человека?",
-      answers: ["1", "2", "3", "4"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Какой цвет у травы?",
-      answers: ["Синий", "Красный", "Зелёный", "Жёлтый"],
-      correctIndex: 2,
-    ),
-
-    Question(
-      question: "Сколько будет 3 + 3?",
-      answers: ["5", "6", "7", "8"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Сколько месяцев в году?",
-      answers: ["10", "11", "12", "13"],
-      correctIndex: 2,
-    ),
-
-    Question(
-      question: "Как называется планета, на которой мы живём?",
-      answers: ["Марс", "Земля", "Юпитер", "Солнце"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "Сколько пальцев на одной руке?",
-      answers: ["4", "5", "6", "7"],
-      correctIndex: 1,
-    ),
+  static final List<Question> _quizSpace = [
+    Question(question: "Сколько планет в Солнечной системе?", answers: ["8","9","7","10"], correctIndex: 0),
+    Question(question: "Какая планета самая большая?", answers: ["Юпитер","Марс","Земля","Венера"], correctIndex: 0),
+    Question(question: "Какая планета ближе всего к Солнцу?", answers: ["Меркурий","Венера","Марс","Земля"], correctIndex: 0),
+    Question(question: "Как называется наша галактика?", answers: ["Млечный путь","Андромеда","Орион","Сириус"], correctIndex: 0),
+    Question(question: "Как называется спутник Земли?", answers: ["Луна","Фобос","Титан","Европа"], correctIndex: 0),
+    Question(question: "Какая планета красная?", answers: ["Марс","Юпитер","Нептун","Венера"], correctIndex: 0),
+    Question(question: "Какая планета с кольцами?", answers: ["Сатурн","Марс","Меркурий","Плутон"], correctIndex: 0),
+    Question(question: "Кто первый полетел в космос?", answers: ["Юрий Гагарин","Армстронг","Маск","Галилей"], correctIndex: 0),
+    Question(question: "Кто первым ступил на Луну?", answers: ["Нил Армстронг","Гагарин","Колумб","Тесла"], correctIndex: 0),
+    Question(question: "Что в центре Солнечной системы?", answers: ["Солнце","Земля","Марс","Юпитер"], correctIndex: 0),
+    Question(question: "Что такое астероид?", answers: ["Космический камень","Планета","Звезда","Комета"], correctIndex: 0),
+    Question(question: "Что такое комета?", answers: ["Ледяное тело","Планета","Спутник","Метеор"], correctIndex: 0),
+    Question(question: "Что такое чёрная дыра?", answers: ["Область с сильной гравитацией","Планета","Звезда","Туманность"], correctIndex: 0),
+    Question(question: "Сколько спутников у Земли?", answers: ["1","2","3","4"], correctIndex: 0),
+    Question(question: "Самая горячая планета?", answers: ["Венера","Марс","Земля","Нептун"], correctIndex: 0),
+    Question(question: "Самая холодная планета?", answers: ["Нептун","Марс","Венера","Земля"], correctIndex: 0),
+    Question(question: "Что изучает астрономия?", answers: ["Космос","Химию","Биологию","Языки"], correctIndex: 0),
+    Question(question: "Как называется путь планеты?", answers: ["Орбита","Траектория","Круг","Путь"], correctIndex: 0),
+    Question(question: "Есть ли звук в космосе?", answers: ["Нет","Да","Иногда","Только ночью"], correctIndex: 0),
+    Question(question: "Что такое невесомость?", answers: ["Отсутствие веса","Полет","Скорость","Туман"], correctIndex: 0),
+    Question(question: "Сколько длится год на Земле?", answers: ["365 дней","200","400","100"], correctIndex: 0),
+    Question(question: "Что защищает Землю от радиации?", answers: ["Магнитное поле","Луна","Марс","Облака"], correctIndex: 0),
+    Question(question: "Что такое галактика?", answers: ["Система звёзд","Планета","Комета","Ракета"], correctIndex: 0),
+    Question(question: "Самая маленькая планета?", answers: ["Меркурий","Марс","Земля","Сатурн"], correctIndex: 0),
+    Question(question: "Что такое метеорит?", answers: ["Камень из космоса","Планета","Звезда","Газ"], correctIndex: 0),
+    Question(question: "Как называется взрыв звезды?", answers: ["Сверхновая","Метеор","Комета","Пульсар"], correctIndex: 0),
+    Question(question: "Что такое туманность?", answers: ["Облако газа","Планета","Спутник","Чёрная дыра"], correctIndex: 0),
+    Question(question: "Какая планета ближе к Земле?", answers: ["Венера","Юпитер","Сатурн","Уран"], correctIndex: 0),
+    Question(question: "Что такое экзопланета?", answers: ["Планета вне системы","Спутник","Комета","Астероид"], correctIndex: 0),
+    Question(question: "Как называется теория происхождения Вселенной?", answers: ["Большой взрыв","Эволюция","Гравитация","Орбита"], correctIndex: 0),
+    Question(question: "Какая планета самая плотная?", answers: ["Земля","Юпитер","Марс","Сатурн"], correctIndex: 0),
+    Question(question: "Что такое солнечное затмение?", answers: ["Луна закрывает Солнце","Марс закрывает","Туман","Комета"], correctIndex: 0),
+    Question(question: "Что такое лунное затмение?", answers: ["Земля закрывает Луну","Солнце закрывает","Марс","Туман"], correctIndex: 0),
+    Question(question: "Какой газ на Солнце основной?", answers: ["Водород","Кислород","Азот","Углекислый газ"], correctIndex: 0),
+    Question(question: "Сколько минут свет летит до Земли?", answers: ["8","1","30","60"], correctIndex: 0),
+    Question(question: "Кто изучает космос?", answers: ["Астронавт","Врач","Повар","Дизайнер"], correctIndex: 0),
+    Question(question: "Как называется станция на орбите?", answers: ["МКС","NASA","SpaceX","Орбита"], correctIndex: 0),
+    Question(question: "Что такое орбитальная скорость?", answers: ["Скорость для удержания на орбите","Максимум","Минимум","Ноль"], correctIndex: 0),
+    Question(question: "Какая планета лёжа вращается?", answers: ["Уран","Марс","Земля","Юпитер"], correctIndex: 0),
+    Question(question: "Есть ли вода на Марсе?", answers: ["Следы есть","Нет","Много","Океаны"], correctIndex: 0),
+    Question(question: "Как называется запуск ракеты?", answers: ["Старт","Орбита","Финиш","Сигнал"], correctIndex: 0),
+    Question(question: "Что такое пояс астероидов?", answers: ["Область камней","Планета","Звезда","Туманность"], correctIndex: 0),
+    Question(question: "Сколько планет-гигантов?", answers: ["4","2","3","5"], correctIndex: 0),
+    Question(question: "Какая планета голубая?", answers: ["Нептун","Марс","Меркурий","Венера"], correctIndex: 0),
+    Question(question: "Что такое космическая станция?", answers: ["Орбитальная лаборатория","Планета","Спутник","Комета"], correctIndex: 0),
+    Question(question: "Как называется край галактики?", answers: ["Рукав","Орбита","Кольцо","Пояс"], correctIndex: 0),
+    Question(question: "Что такое сверхмассивная чёрная дыра?", answers: ["Гигантская дыра в центре галактики","Планета","Звезда","Комета"], correctIndex: 0),
+    Question(question: "Можно ли жить на Солнце?", answers: ["Нет","Да","Иногда","Теоретически"], correctIndex: 0),
+    Question(question: "Какая планета быстрее всех вращается?", answers: ["Юпитер","Марс","Земля","Венера"], correctIndex: 0),
+    Question(question: "Что такое гравитация?", answers: ["Сила притяжения","Свет","Газ","Туман"], correctIndex: 0),
+    Question(question: "Как называется изучение звёзд?", answers: ["Астрономия","Биология","Физика","Химия"], correctIndex: 0),
+    Question(question: "Сколько континентов на Земле видно из космоса?", answers: ["7","5","6","8"], correctIndex: 0),
+    Question(question: "Как называется космический костюм?", answers: ["Скафандр","Броня","Костюм","Форма"], correctIndex: 0),
+    Question(question: "Что такое Марс?", answers: ["Планета","Звезда","Комета","Спутник"], correctIndex: 0),
+    Question(question: "Какая планета имеет больше всего спутников?", answers: ["Юпитер","Земля","Марс","Венера"], correctIndex: 0),
+    Question(question: "Что такое МКС?", answers: ["Международная космическая станция","Марсианский корабль","Спутник","Планета"], correctIndex: 0),
+    Question(question: "Что происходит в центре галактики?", answers: ["Чёрная дыра","Планета","Солнце","Комета"], correctIndex: 0),
+    Question(question: "Можно ли дышать в космосе?", answers: ["Нет","Да","Иногда","Только ночью"], correctIndex: 0),
+  ];
+  static final List<Question> _quizScience = [
+    Question(question: "Что изучает биология?", answers: ["Живые организмы","Планеты","Числа","Музыку"], correctIndex: 0),
+    Question(question: "Что изучает химия?", answers: ["Вещества и реакции","Историю","Космос","Языки"], correctIndex: 0),
+    Question(question: "Что изучает физика?", answers: ["Законы природы","Растения","Животных","Картины"], correctIndex: 0),
+    Question(question: "Что такое атом?", answers: ["Мельчайшая частица вещества","Планета","Орган","Газ"], correctIndex: 0),
+    Question(question: "Что такое молекула?", answers: ["Соединение атомов","Клетка","Орган","Кристалл"], correctIndex: 0),
+    Question(question: "Какой газ нужен человеку для дыхания?", answers: ["Кислород","Азот","Гелий","Водород"], correctIndex: 0),
+    Question(question: "Сколько костей у взрослого человека?", answers: ["206","300","150","180"], correctIndex: 0),
+    Question(question: "Какой орган качает кровь?", answers: ["Сердце","Лёгкие","Печень","Почки"], correctIndex: 0),
+    Question(question: "Что такое ДНК?", answers: ["Наследственная молекула","Вирус","Орган","Кость"], correctIndex: 0),
+    Question(question: "Кто открыл закон гравитации?", answers: ["Ньютон","Эйнштейн","Тесла","Галилей"], correctIndex: 0),
+    Question(question: "Что такое энергия?", answers: ["Способность совершать работу","Свет","Газ","Материя"], correctIndex: 0),
+    Question(question: "Что такое клетка?", answers: ["Основная единица жизни","Атом","Орган","Кость"], correctIndex: 0),
+    Question(question: "Какой элемент обозначается H?", answers: ["Водород","Гелий","Кислород","Азот"], correctIndex: 0),
+    Question(question: "Какой элемент обозначается O?", answers: ["Кислород","Золото","Серебро","Углерод"], correctIndex: 0),
+    Question(question: "Что такое вирус?", answers: ["Микроорганизм","Камень","Планета","Кость"], correctIndex: 0),
+    Question(question: "Что такое бактерия?", answers: ["Микроорганизм","Орган","Газ","Металл"], correctIndex: 0),
+    Question(question: "Что такое давление?", answers: ["Сила на площадь","Температура","Скорость","Масса"], correctIndex: 0),
+    Question(question: "Что такое скорость?", answers: ["Путь за время","Вес","Сила","Давление"], correctIndex: 0),
+    Question(question: "Что такое температура?", answers: ["Степень нагретости","Скорость","Масса","Длина"], correctIndex: 0),
+    Question(question: "Какой газ самый распространённый в атмосфере?", answers: ["Азот","Кислород","Водород","Гелий"], correctIndex: 0),
+    Question(question: "Что такое нейрон?", answers: ["Нервная клетка","Кость","Атом","Металл"], correctIndex: 0),
+    Question(question: "Что изучает анатомия?", answers: ["Строение тела","Космос","Растения","Камни"], correctIndex: 0),
+    Question(question: "Что такое масса?", answers: ["Количество вещества","Скорость","Температура","Свет"], correctIndex: 0),
+    Question(question: "Что такое инерция?", answers: ["Свойство сохранять движение","Сила","Вес","Импульс"], correctIndex: 0),
+    Question(question: "Что такое импульс?", answers: ["Произведение массы на скорость","Вес","Сила","Температура"], correctIndex: 0),
+    Question(question: "Что изучает геология?", answers: ["Земную кору","Космос","Животных","Химию"], correctIndex: 0),
+    Question(question: "Что такое фермент?", answers: ["Биологический катализатор","Металл","Газ","Камень"], correctIndex: 0),
+    Question(question: "Что такое свет?", answers: ["Электромагнитная волна","Газ","Камень","Жидкость"], correctIndex: 0),
+    Question(question: "Что такое звук?", answers: ["Колебания среды","Свет","Газ","Импульс"], correctIndex: 0),
+    Question(question: "Что такое фотосинтез?", answers: ["Процесс создания пищи растениями","Дыхание","Горение","Испарение"], correctIndex: 0),
+    Question(question: "Что такое эволюция?", answers: ["Развитие видов","Взрыв","Реакция","Давление"], correctIndex: 0),
+    Question(question: "Кто создал теорию относительности?", answers: ["Эйнштейн","Ньютон","Дарвин","Тесла"], correctIndex: 0),
+    Question(question: "Что такое гипотеза?", answers: ["Научное предположение","Факт","Закон","Ответ"], correctIndex: 0),
+    Question(question: "Что такое эксперимент?", answers: ["Проверка гипотезы","Теория","Фантазия","Игра"], correctIndex: 0),
+    Question(question: "Что такое закон в науке?", answers: ["Подтверждённое правило","Гипотеза","Мнение","Идея"], correctIndex: 0),
+    Question(question: "Что такое плазма?", answers: ["Ионизированный газ","Металл","Жидкость","Камень"], correctIndex: 0),
+    Question(question: "Какой орган отвечает за мышление?", answers: ["Мозг","Сердце","Печень","Лёгкие"], correctIndex: 0),
+    Question(question: "Что такое радиация?", answers: ["Излучение энергии","Свет","Газ","Тепло"], correctIndex: 0),
+    Question(question: "Что такое ген?", answers: ["Участок ДНК","Орган","Клетка","Белок"], correctIndex: 0),
+    Question(question: "Что такое сила?", answers: ["Воздействие на тело","Вес","Температура","Масса"], correctIndex: 0),
+    Question(question: "Что изучает психология?", answers: ["Поведение человека","Камни","Звёзды","Химию"], correctIndex: 0),
+    Question(question: "Что такое теория?", answers: ["Объяснение явления","Гипотеза","Ответ","Игра"], correctIndex: 0),
+    Question(question: "Что такое элемент?", answers: ["Тип атома","Молекула","Клетка","Орган"], correctIndex: 0),
+    Question(question: "Что такое кислота?", answers: ["Вещество с кислой реакцией","Газ","Металл","Белок"], correctIndex: 0),
+    Question(question: "Что такое щёлочь?", answers: ["Растворимое основание","Металл","Газ","Камень"], correctIndex: 0),
+    Question(question: "Что такое вода химически?", answers: ["H2O","CO2","O2","NaCl"], correctIndex: 0),
+    Question(question: "Что такое тепло?", answers: ["Передача энергии","Свет","Газ","Масса"], correctIndex: 0),
+    Question(question: "Что такое пространство?", answers: ["Среда существования материи","Газ","Планета","Звезда"], correctIndex: 0),
+    Question(question: "Что такое время?", answers: ["Измерение изменений","Газ","Материя","Сила"], correctIndex: 0),
+    Question(question: "Что такое открытие?", answers: ["Нахождение нового знания","Ошибка","Игра","Ответ"], correctIndex: 0),
+    Question(question: "Что такое вселенная?", answers: ["Всё существующее","Планета","Галактика","Звезда"], correctIndex: 0),
+    Question(question: "Что такое магнит?", answers: ["Предмет с магнитным полем","Газ","Камень","Жидкость"], correctIndex: 0),
+    Question(question: "Что такое электричество?", answers: ["Движение зарядов","Газ","Свет","Камень"], correctIndex: 0),
+    Question(question: "Что такое реакция?", answers: ["Взаимодействие веществ","Сон","Дыхание","Вес"], correctIndex: 0),
+    Question(question: "Что такое формула?", answers: ["Запись состава вещества","Теория","Закон","Ответ"], correctIndex: 0),
+    Question(question: "Что изучает экология?", answers: ["Взаимодействие организмов","Космос","Числа","Картины"], correctIndex: 0),
+    Question(question: "Что такое научный метод?", answers: ["Способ исследования","Игра","Ответ","Мнение"], correctIndex: 0),
+  ];
+  static final List<Question> _quizSocial = [
+    Question(question: "Что такое социальная сеть?", answers: ["Платформа для общения","Игра","Браузер","Телевизор"], correctIndex: 0),
+    Question(question: "Что такое лайк?", answers: ["Отметка нравится","Комментарий","Фото","Пароль"], correctIndex: 0),
+    Question(question: "Что такое хэштег?", answers: ["Слово с #","Пароль","Фото","Реклама"], correctIndex: 0),
+    Question(question: "Что такое подписчик?", answers: ["Человек, следящий за аккаунтом","Разработчик","Хакер","Модератор"], correctIndex: 0),
+    Question(question: "Что такое сторис?", answers: ["Временная публикация","Пост","Комментарий","Сообщение"], correctIndex: 0),
+    Question(question: "Что такое репост?", answers: ["Повторная публикация","Удаление","Лайк","Блок"], correctIndex: 0),
+    Question(question: "Что такое алгоритм ленты?", answers: ["Система показа контента","Фильтр","Пароль","Код"], correctIndex: 0),
+    Question(question: "Что такое кибербуллинг?", answers: ["Травля в интернете","Игра","Чат","Реклама"], correctIndex: 0),
+    Question(question: "Что такое приватность?", answers: ["Конфиденциальность данных","Фото","Пароль","Хэштег"], correctIndex: 0),
+    Question(question: "Что такое тренд?", answers: ["Популярное направление","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое инфлюенсер?", answers: ["Влиятельный блогер","Хакер","Программист","Модератор"], correctIndex: 0),
+    Question(question: "Что такое контент?", answers: ["Материалы публикации","Пароль","Фотоаппарат","Код"], correctIndex: 0),
+    Question(question: "Что такое фейк-ньюс?", answers: ["Ложные новости","Правда","Мем","Видео"], correctIndex: 0),
+    Question(question: "Что такое цифровой след?", answers: ["Данные о действиях в сети","Фото","Пароль","Хэштег"], correctIndex: 0),
+    Question(question: "Что такое двухфакторная аутентификация?", answers: ["Дополнительная защита входа","Лайк","Фото","Подписка"], correctIndex: 0),
+    Question(question: "Что такое стрим?", answers: ["Прямая трансляция","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое SMM?", answers: ["Маркетинг в соцсетях","Игра","Программа","Пароль"], correctIndex: 0),
+    Question(question: "Что такое блогер?", answers: ["Создатель контента","Хакер","Модератор","Повар"], correctIndex: 0),
+    Question(question: "Что такое никнейм?", answers: ["Имя пользователя","Пароль","Фото","Хэштег"], correctIndex: 0),
+    Question(question: "Что такое аватар?", answers: ["Фото профиля","Пароль","Комментарий","Пост"], correctIndex: 0),
+    Question(question: "Что такое модерация?", answers: ["Контроль контента","Лайк","Репост","Сторис"], correctIndex: 0),
+    Question(question: "Что такое охват?", answers: ["Количество увидевших","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое engagement?", answers: ["Вовлечённость","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое блокировка?", answers: ["Запрет доступа","Лайк","Фото","Подписка"], correctIndex: 0),
+    Question(question: "Что такое reels?", answers: ["Короткое видео","Фото","Комментарий","Чат"], correctIndex: 0),
+    Question(question: "Что такое clickbait?", answers: ["Заманчивый заголовок","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое донат?", answers: ["Финансовая поддержка","Фото","Пароль","Лайк"], correctIndex: 0),
+    Question(question: "Что такое боты?", answers: ["Автоматические аккаунты","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое спам?", answers: ["Нежелательные сообщения","Фото","Пароль","Лайк"], correctIndex: 0),
+    Question(question: "Что такое личный бренд?", answers: ["Имидж человека онлайн","Пароль","Фото","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое аналитика соцсетей?", answers: ["Анализ статистики","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое shadow ban?", answers: ["Скрытая блокировка","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое сторителлинг?", answers: ["Рассказывание историй","Фото","Пароль","Хэштег"], correctIndex: 0),
+    Question(question: "Что такое публикация?", answers: ["Размещение поста","Удаление","Лайк","Блок"], correctIndex: 0),
+    Question(question: "Что такое директ?", answers: ["Личные сообщения","Фото","Пароль","Пост"], correctIndex: 0),
+    Question(question: "Что такое приватный аккаунт?", answers: ["Закрытый профиль","Публичный","Бот","Мем"], correctIndex: 0),
+    Question(question: "Что такое алгоритм YouTube?", answers: ["Система рекомендаций","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое вирусный контент?", answers: ["Быстро распространяемый","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое таргетированная реклама?", answers: ["Реклама по интересам","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое челлендж?", answers: ["Интернет-вызов","Фото","Пароль","Пост"], correctIndex: 0),
+    Question(question: "Что такое подписка?", answers: ["Следить за аккаунтом","Фото","Пароль","Блок"], correctIndex: 0),
+    Question(question: "Что такое фильтр?", answers: ["Эффект для фото","Пароль","Комментарий","Лайк"], correctIndex: 0),
+    Question(question: "Что такое онлайн-репутация?", answers: ["Образ в интернете","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое цифровая зависимость?", answers: ["Чрезмерное использование","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое краудфандинг?", answers: ["Сбор средств онлайн","Фото","Пароль","Лайк"], correctIndex: 0),
+    Question(question: "Что такое SEO в соцсетях?", answers: ["Оптимизация контента","Фото","Пароль","Фильтр"], correctIndex: 0),
+    Question(question: "Что такое хейт?", answers: ["Негативные комментарии","Фото","Пароль","Лайк"], correctIndex: 0),
+    Question(question: "Что такое алгоритмическая лента?", answers: ["Подбор контента по интересам","Фото","Пароль","Пост"], correctIndex: 0),
+    Question(question: "Что такое бренд в соцсетях?", answers: ["Имидж компании","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое мем?", answers: ["Юмористический контент","Пароль","Фотоаппарат","Код"], correctIndex: 0),
+    Question(question: "Что такое сторис-архив?", answers: ["Сохранённые сторис","Фото","Пароль","Комментарий"], correctIndex: 0),
+    Question(question: "Что такое цифровая гигиена?", answers: ["Безопасное поведение онлайн","Фото","Пароль","Лайк"], correctIndex: 0),
   ];
 
   final List<String> imagesLocal = [
     "assets/images/logic.jpg",
     "assets/images/geeks.jpg",
     "assets/images/jun.jpg",
+    "assets/images/islam.jpg",
+    "assets/images/designer.jpg",
+    "assets/images/cosmos.jpg",
+    "assets/images/science.jpg",
+    "assets/images/socialMedia.jpg"
   ];
   final List<String> Icons = [
     "assets/icons/LOGIC_ICON.jpg",
     "assets/icons/GEEKS_ICON.jpg",
     "assets/icons/JUNIOR_ICON.jpg",
+    "assets/icons/ISLAM_ICON.jpg",
+    "assets/icons/DESIGNER_ICON.jpg",
+    "assets/icons/COSMOS_ICON.jpg",
+    "assets/icons/SCIENCE_ICON.jpg",
+    "assets/icons/SOCIALMEDIA_ICON.jpg"
   ];
   final List<String> descriptions = [
     "Это не просто вопросы - это челлендж для твоего интеллекта. Проверь, насколько ты умеешь анализировать, сравнивать и находить скрытые решения.",
     "Тут вопросы про нашу академию - На сколько ты знаешь академию Geeks и разные направления IT",
-    "Весёлые задачки, которые помогут тебе думать быстрее и находить правильные решения!"
+    "Весёлые задачки, которые помогут тебе думать быстрее и находить правильные решения!",
+    "Думаешь, знаешь всё про пять столпов, пророков и важные события? Проверим \nЭта категория не скучная теория, а лёгкий и понятный квиз про фундаментальные знания ислама: вера, практика, история и базовые принципы.",
+    "Эта категория про культовых дизайнеров, бренды, креатив, стиль и решения, которые изменили визуальный мир.",
+    "Любишь звёзды, планеты и всё, что летает быстрее интернета?\nВ этой категории ты узнаешь, сколько планет в Солнечной системе, что такое чёрная дыра, почему Луна не падает и правда ли, что в космосе никто не услышит твой крик. Готов проверить, космический ли у тебя мозг?",
+    "Как устроен мир ?\nНаука - это не скучные формулы, а способ понимать реальность. Почему небо голубое? Как работает мозг? Из чего состоит всё вокруг? Проверим, насколько ты будущий учёный.",
+    "Скроллишь каждый день? \nТогда пора узнать, что стоит за лайками и алгоритмами \nСоциальные сети — это не только мемы и сторис. Это алгоритмы, тренды, блогеры, безопасность и влияние на мозг. Насколько ты осознанный пользователь?"
   ];
 
   List<String> getGameNames(){
@@ -277,6 +873,16 @@ class GameData {
         return _quizGeeks;
       case 3:
         return _quizJunior;
+      case 4:
+        return _quizIslam;
+      case 5:
+        return _quizDesigner;
+      case 6:
+        return _quizSpace;
+      case 7:
+        return _quizScience;
+      case 8:
+        return _quizSocial;
       default:
         return _quizLogic;
     }
