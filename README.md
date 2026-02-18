@@ -112,8 +112,7 @@ flutter run
 
 ## 📸 Screenshots
 
-> Coming soon  
-(Добавь сюда реальные скриншоты позже)
+> Coming soon
 
 ---
 
