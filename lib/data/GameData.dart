@@ -25,7 +25,6 @@ class GameData {
     Question(question: "Сколько нулей в числе миллион?", answers: ["6", "5", "4", "7"], correctIndex: 0),
     Question(question: "Если все А — это Б, а все Б — это В, то все А — это?", answers: ["В", "Б", "Ничего", "А"], correctIndex: 0),
     Question(question: "Сколько минут в 2 часах?", answers: ["120", "100", "90", "60"], correctIndex: 0),
-
     Question(question: "Продолжи: 3, 6, 12, 24, ?", answers: ["48", "36", "30", "60"], correctIndex: 0),
     Question(question: "Сколько сторон у пятиугольника?", answers: ["5", "6", "4", "8"], correctIndex: 0),
     Question(question: "Если 5 машин делают 5 деталей за 5 минут, сколько нужно машин, чтобы сделать 100 деталей за 100 минут?", answers: ["5", "100", "20", "10"], correctIndex: 0),
@@ -86,92 +85,53 @@ class GameData {
     Question(question: "Продолжи ряд: 1, 1, 2, 3, 5, ?", answers: ["8", "7", "6", "10"], correctIndex: 0,),
     Question(question: "Сколько граней у куба?", answers: ["6", "4", "8", "12"], correctIndex: 0,),
     Question(question: "Если сегодня понедельник, какой день будет через 10 дней?", answers: ["Четверг", "Среда", "Пятница", "Воскресенье"], correctIndex: 0,),
-    Question(
-      question: "Что не имеет начала и конца?",
-      answers: ["Круг", "Линия", "Отрезок", "Квадрат"],
-      correctIndex: 0,
-    ),
-    Question(
-      question: "Сколько будет 9 × 9?",
-      answers: ["81", "72", "99", "90"],
-      correctIndex: 0,
-    ),
-    Question(
-      question: "Если 5 машин делают 5 деталей за 5 минут, сколько нужно машин, чтобы сделать 100 деталей за 100 минут?",
-      answers: ["5", "100", "10", "20"],
-      correctIndex: 0,
-    ),
-    Question(
-      question: "Что лишнее: 2, 4, 6, 9, 10?",
-      answers: ["2", "4", "6", "9"],
-      correctIndex: 3,
-    ),
-
-    Question(
-      question: "Продолжи ряд: 3, 6, 12, 24, ?",
-      answers: ["36", "48", "30", "40"],
-      correctIndex: 1,
-    ),
-
-    Question(
-      question: "У Маши 3 яблока, она дала 1. Сколько осталось?",
-      answers: ["1", "2", "3", "4"],
-      correctIndex: 1,
-    ),
-
+    Question(question: "Что не имеет начала и конца?", answers: ["Круг", "Линия", "Отрезок", "Квадрат"], correctIndex: 0,),
+    Question(question: "Сколько будет 9 × 9?", answers: ["81", "72", "99", "90"], correctIndex: 0,),
+    Question(question: "Если 5 машин делают 5 деталей за 5 минут, сколько нужно машин, чтобы сделать 100 деталей за 100 минут?", answers: ["5", "100", "10", "20"], correctIndex: 0,),
+    Question(question: "Что лишнее: 2, 4, 6, 9, 10?", answers: ["2", "4", "6", "9"], correctIndex: 3,),
+    Question(question: "Продолжи ряд: 3, 6, 12, 24, ?", answers: ["36", "48", "30", "40"], correctIndex: 1,),
+    Question(question: "У Маши 3 яблока, она дала 1. Сколько осталось?", answers: ["1", "2", "3", "4"], correctIndex: 1,),
     Question(
       question: "Если сегодня вторник, какой день будет через 3 дня?",
       answers: ["Пятница", "Суббота", "Четверг", "Воскресенье"],
       correctIndex: 0,
     ),
-
     Question(
       question: "Сколько сторон у квадрата?",
       answers: ["3", "4", "5", "6"],
       correctIndex: 1,
     ),
-
     Question(
       question: "Что тяжелее: 1 кг железа или 1 кг ваты?",
       answers: ["Железо", "Вата", "Одинаково", "Зависит от размера"],
       correctIndex: 2,
     ),
-
     Question(
       question: "Продолжи: 1, 1, 2, 3, 5, ?",
       answers: ["6", "7", "8", "9"],
       correctIndex: 2,
     ),
-
     Question(
       question: "Сколько будет 15 - 7?",
       answers: ["6", "7", "8", "9"],
       correctIndex: 2,
     ),
-
     Question(
       question: "У треугольника сколько углов?",
       answers: ["2", "3", "4", "5"],
       correctIndex: 1,
     ),
-
     Question(
       question: "Если 5 + 5 = 10, то 10 + 10 = ?",
       answers: ["10", "15", "20", "25"],
       correctIndex: 2,
     ),
-
     Question(
       question: "Что идёт после 99?",
       answers: ["100", "101", "98", "109"],
       correctIndex: 0,
     ),
-
-    Question(
-      question: "Сколько минут в часе?",
-      answers: ["30", "45", "60", "90"],
-      correctIndex: 2,
-    ),
+    Question(question: "Сколько минут в часе?",answers: ["30", "45", "60", "90"], correctIndex: 2,),
   ];
   static final List<Question> _quizGeeks = [
     Question(question: "В каком году была основана академия Geeks", answers: ["2018","2024","2020","2022"], correctIndex: 0),

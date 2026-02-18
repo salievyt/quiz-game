@@ -1,16 +1,159 @@
-# quiz
+# 🎯 Quizzy
 
-A new Flutter project.
+<p align="center">
+  <b>Modern Mobile Quiz Game built with Flutter</b><br>
+  Clean UI • Smooth Animations • Scalable Architecture
+</p>
 
-## Getting Started
+<p align="center">
+  <img src="https://img.shields.io/badge/Flutter-3.x-blue?logo=flutter">
+  <img src="https://img.shields.io/badge/Dart-3.x-blue?logo=dart">
+  <img src="https://img.shields.io/badge/Platform-Android%20%7C%20iOS-green">
+  <img src="https://img.shields.io/badge/Version-1.0.0-orange">
+</p>
 
-This project is a starting point for a Flutter application.
+---
 
-A few resources to get you started if this is your first Flutter project:
+## 📱 Overview
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+**Quizzy** — это современное мобильное приложение-викторина с несколькими категориями, рандомизированными вопросами и плавной анимацией переходов.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Проект создан с упором на:
+
+- 🧠 Чистую архитектуру
+- 📦 Масштабируемость
+- 🎨 Современный UI/UX
+- ⚡ Производительность
+- 📱 Кроссплатформенность (Android & iOS)
+
+---
+
+## 🚀 Features
+
+### 📚 Categories
+
+- 🧠 Logic
+- 💻 Geeks
+- 👶 Junior
+- ☪ Основы Ислама
+- 🎨 UX/UI & Graphic Design
+- 🚀 Космос
+- 🔬 Наука
+- 🌐 Социальные сети
+
+Каждая категория содержит **60+ уникальных вопросов**.
+
+---
+
+### 🎮 Gameplay
+
+- 🎲 Рандомный выбор 12 вопросов на игру
+- 🔀 Перемешивание вариантов ответа
+- 📊 Progress bar
+- 🏆 Подсчет очков
+- 🎉 Экран результатов
+- 🔁 Возможность перезапуска
+
+---
+
+### ✨ UI / UX
+
+- Плавные анимации смены вопросов
+- Material дизайн для Android
+- Cupertino стиль для iOS
+- Минималистичный интерфейс
+- Готовность к дальнейшему редизайну
+
+---
+
+## 🏗 Project Structure
+
+```
+lib/
+ ├── data/
+ │   └── gamedata.dart
+ ├── models/
+ │   └── question.dart
+ ├── ui/
+ │   ├── categories.dart
+ │   └── game.dart
+```
+
+---
+
+## 🛠 Tech Stack
+
+- Flutter
+- Dart
+- my_progress_bar
+
+---
+
+## 🧩 Architecture Highlights
+
+- Вопросы вынесены в `GameData`
+- Модель `Question`
+- Данные отделены от UI
+- Подготовка к внедрению state management
+- Готовность к backend интеграции
+
+---
+
+## 📦 Installation
+
+```bash
+git clone https://github.com/salievyt/quiz-game.git
+cd quiz-game
+flutter pub get
+flutter run
+```
+
+---
+
+## 📸 Screenshots
+
+> Coming soon  
+(Добавь сюда реальные скриншоты позже)
+
+---
+
+## 🗺 Roadmap
+
+### v1.1
+- 💾 Сохранение прогресса
+- 🎯 Уровни сложности
+- 🔥 Анимация правильного / неправильного ответа
+
+### v1.2
+- 🏆 Лидерборд
+- 🌍 Мультиязычность
+- 📊 Статистика пользователя
+
+### v2.0
+- ☁ Backend
+- 👥 Авторизация
+- 🧠 Онлайн-база вопросов
+- 💰 Монетизация
+
+---
+
+## 📈 Future Vision
+
+Quizzy — это база для масштабируемой образовательной платформы с:
+
+- динамической загрузкой контента
+- кастомными тестами
+- админ-панелью
+- мультиплеером
+
+---
+
+## 👨‍💻 Author
+
+Developed by **@salievyt**
+
+---
+
+## 📄 License
+
+This project is open source.
