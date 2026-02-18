@@ -25,7 +25,7 @@ class _QuizState extends State<Quiz> {
         children: [
           Expanded(child:
           ListView.separated(
-              itemCount: Gamedata().getGameNames().length,
+              itemCount: GameData().getGameNames().length,
               separatorBuilder: (context,index) => Divider(
                 radius: BorderRadius.circular(14),
                 indent: 10,
@@ -34,15 +34,15 @@ class _QuizState extends State<Quiz> {
               ),
               itemBuilder: (context,index){
                 return ListTile(
-                  title: Text(Gamedata().getGameNames()[index]),
+                  title: Text(GameData().getGameNames()[index]),
                   leading: CircleAvatar(
-                    backgroundImage: AssetImage(Gamedata().getIcons()[index]),
+                    backgroundImage: AssetImage(GameData().getIcons()[index]),
                   ),
                   trailing: Icon(Icons.navigate_next),
                   onTap: (){
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Categories(category: Gamedata().getGameNames()[index], image: Gamedata().getImagesLocal()[index], desc: Gamedata().getDescriptions()[index], ID: Gamedata().getGameIds()[index],)),
+                      MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),
                     );
                   },
                 );
