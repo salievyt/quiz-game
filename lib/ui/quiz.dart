@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/data/GameData.dart';
+import 'package:quiz/ui/speedrun.dart';
 import 'categories.dart';
 
 class Quiz extends StatefulWidget {
@@ -49,7 +50,6 @@ class _QuizState extends State<Quiz> {
               }
             )
           ),
-
         ],
       ),
     );
