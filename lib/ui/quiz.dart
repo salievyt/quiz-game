@@ -41,9 +41,9 @@ class _QuizState extends State<Quiz> {
                   ),
                   trailing: Icon(Icons.navigate_next),
                   onTap: (){
-                    if (GameData().getGameNames()[index] == "Speedrun"){
+                    if (index == 8){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => Speedrun()));
-                    }else{
+                    } else {
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),

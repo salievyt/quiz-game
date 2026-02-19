@@ -28,6 +28,14 @@ class ResultScreen extends StatelessWidget {
                 Navigator.pop(context);
               },
               child: const Text("Играть снова"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF7ED421),
+                foregroundColor: Colors.white,
+                minimumSize: const Size(200, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              )
             )
           ],
         ),

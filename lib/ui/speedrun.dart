@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:my_progress_bar/progress_bar.dart';
 
 import '../models/question.dart';
+import '../data/gamedata.dart';
 import 'ResultScreen.dart';
 
 class Speedrun extends StatefulWidget {
@@ -17,37 +18,62 @@ class Speedrun extends StatefulWidget {
 }
 
 class _SpeedrunState extends State<Speedrun> {
-  int _timeLeft = 60;
+  int _timeLeft = 0;
+  int _timeBack = 60;
   late Timer _timer;
   bool _isGameOver = false;
-  late List<Question> _questions;
+
+  List<Question> _questions = [];
   int _currentIndex = 0;
   int _score = 0;
+
+  final Random _random = Random();
 
   @override
   void initState() {
     super.initState();
+    _loadQuestions();
     _startTimer();
-    _loadRandomQuestion();
+  }
+
+  void _loadQuestions() {
+    // Берём ВСЕ вопросы из GameData
+    _questions = GameData.getQuiz(9);
+    _questions.shuffle();
+
+    // Перемешиваем ответы
+    for (var q in _questions) {
+      q.shuffleAnswers();
+    }
+
+    if (_questions.isNotEmpty) {
+      _currentIndex = _random.nextInt(_questions.length);
+    }
   }
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (_timeLeft == 0) {
+      if (_timeLeft == 60) {
         _finishGame();
       } else {
         setState(() {
-          _timeLeft--;
+          _timeLeft++;
+          _timeBack--;
         });
       }
     });
   }
 
-  final Random _random = Random();
-
   void _loadRandomQuestion() {
+    if (_questions.isEmpty) return;
+
     setState(() {
-      _currentIndex = _random.nextInt(_questions.length);
+      int newIndex;
+      do {
+        newIndex = _random.nextInt(_questions.length);
+      } while (newIndex == _currentIndex);
+
+      _currentIndex = newIndex;
     });
   }
 
@@ -64,7 +90,7 @@ class _SpeedrunState extends State<Speedrun> {
   }
 
   void _checkAnswer(int selectedIndex) {
-    if (_isGameOver) return;
+    if (_isGameOver || _questions.isEmpty) return;
 
     final question = _questions[_currentIndex];
 
@@ -75,49 +101,44 @@ class _SpeedrunState extends State<Speedrun> {
     _loadRandomQuestion();
   }
 
-  void _showCupertinoExitDialog(BuildContext context) {
+  void _showExitDialog() {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text("Выйти из игры?"),
-          content: Text("Ваш прогресс будет потерян."),
-          actions: [
-            TextButton(
-              child: Text("Нет"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text("Да"),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+      builder: (_) {
+        if (Platform.isIOS) {
+          return CupertinoAlertDialog(
+            title: const Text("Выйти из игры?"),
+            content: const Text("Ваш прогресс будет потерян."),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Нет"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text("Да"),
+              ),
+            ],
+          );
+        }
 
-  void _showMaterialExitDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("Выйти из игры?"),
-          content: Text("Ваш прогресс будет потерян."),
+          title: const Text("Выйти из игры?"),
+          content: const Text("Ваш прогресс будет потерян."),
           actions: [
             TextButton(
-              child: Text("Нет"),
               onPressed: () => Navigator.pop(context),
+              child: const Text("Нет"),
             ),
             TextButton(
-              child: Text("Да"),
               onPressed: () {
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
+              child: const Text("Да"),
             ),
           ],
         );
@@ -127,21 +148,24 @@ class _SpeedrunState extends State<Speedrun> {
 
   @override
   Widget build(BuildContext context) {
+    if (_questions.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: Text("Нет вопросов"),
+        ),
+      );
+    }
+
     final question = _questions[_currentIndex];
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: const Text("Игра"),
+        title: const Text("Speedrun"),
         centerTitle: true,
         leading: IconButton(
-          onPressed: () {
-            if(Platform.isAndroid){
-              _showMaterialExitDialog(context);
-            }else if(Platform.isIOS){
-              _showCupertinoExitDialog(context);
-            }
-          },
+          onPressed: _showExitDialog,
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
       ),
@@ -149,8 +173,7 @@ class _SpeedrunState extends State<Speedrun> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-
-            /// Progress
+            /// Таймер
             Row(
               children: [
                 Expanded(
@@ -169,7 +192,7 @@ class _SpeedrunState extends State<Speedrun> {
                 CircleAvatar(
                   backgroundColor: const Color(0xFF7ED421),
                   child: Text(
-                    "$_timeLeft",
+                    "$_timeBack",
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -181,7 +204,7 @@ class _SpeedrunState extends State<Speedrun> {
 
             const SizedBox(height: 40),
 
-            /// Question
+            /// Вопрос
             Text(
               question.question,
               style: const TextStyle(
@@ -193,7 +216,7 @@ class _SpeedrunState extends State<Speedrun> {
 
             const SizedBox(height: 30),
 
-            /// Answers
+            /// Ответы
             Column(
               children: List.generate(
                 question.answers.length,
@@ -233,5 +256,11 @@ class _SpeedrunState extends State<Speedrun> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 }
