@@ -41,10 +41,14 @@ class _QuizState extends State<Quiz> {
                   ),
                   trailing: Icon(Icons.navigate_next),
                   onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),
-                    );
+                    if (index == 8){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Speedrun()));
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),
+                      );
+                    }
                   },
                 );
               }
