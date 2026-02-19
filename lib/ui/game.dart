@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/data/gamedata.dart';
@@ -22,67 +21,29 @@ class _GameState extends State<Game> {
   @override
   void initState() {
     super.initState();
+    _loadQuestions();
+  }
+
+  void _loadQuestions() {
     _questions = GameData.getQuiz(widget.ID);
+
+    if (_questions.isEmpty) return;
+
     _questions.shuffle();
     _questions = _questions.take(12).toList();
+
     for (var q in _questions) {
       q.shuffleAnswers();
     }
-  }
 
-  void _showCupertinoExitDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text("Выйти из игры?"),
-          content: Text("Ваш прогресс будет потерян."),
-          actions: [
-            TextButton(
-              child: Text("Нет"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text("Да"),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showMaterialExitDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text("Выйти из игры?"),
-          content: Text("Ваш прогресс будет потерян."),
-          actions: [
-            TextButton(
-              child: Text("Нет"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text("Да"),
-              onPressed: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        );
-      },
-    );
+    _currentIndex = 0;
+    _score = 0;
   }
 
   void _checkAnswer(int selectedIndex) {
-    if (selectedIndex ==
-        _questions[_currentIndex].correctIndex) {
+    if (_questions.isEmpty) return;
+
+    if (selectedIndex == _questions[_currentIndex].correctIndex) {
       _score++;
     }
 
@@ -91,12 +52,54 @@ class _GameState extends State<Game> {
         _currentIndex++;
       });
     } else {
-      if (Platform.isAndroid) {
-        _showMaterialResult();
-      } else if (Platform.isIOS) {
-        _showCupertinoResult();
-      }
+      Platform.isIOS ? _showCupertinoResult() : _showMaterialResult();
     }
+  }
+
+  void _showCupertinoExitDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => CupertinoAlertDialog(
+        title: const Text("Выйти из игры?"),
+        content: const Text("Ваш прогресс будет потерян."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Нет"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: const Text("Да"),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showMaterialExitDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Выйти из игры?"),
+        content: const Text("Ваш прогресс будет потерян."),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("Нет"),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+            child: const Text("Да"),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showCupertinoResult() {
@@ -111,8 +114,7 @@ class _GameState extends State<Game> {
             onPressed: () {
               Navigator.pop(context);
               setState(() {
-                _currentIndex = 0;
-                _score = 0;
+                _loadQuestions();
               });
             },
             child: const Text("Играть снова"),
@@ -141,8 +143,7 @@ class _GameState extends State<Game> {
             onPressed: () {
               Navigator.pop(context);
               setState(() {
-                _currentIndex = 0;
-                _score = 0;
+                _loadQuestions();
               });
             },
             child: const Text("Играть снова"),
@@ -161,7 +162,28 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
+    // 🔒 Защита от пустых данных
+    if (_questions.isEmpty) {
+      return const Scaffold(
+        body: Center(
+          child: Text(
+            "В этой категории пока нет вопросов",
+            style: TextStyle(fontSize: 18),
+          ),
+        ),
+      );
+    }
+
+    if (_currentIndex >= _questions.length) {
+      return const Scaffold(
+        body: Center(
+          child: Text("Ошибка индекса"),
+        ),
+      );
+    }
+
     final question = _questions[_currentIndex];
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -170,11 +192,9 @@ class _GameState extends State<Game> {
         centerTitle: true,
         leading: IconButton(
           onPressed: () {
-            if(Platform.isAndroid){
-              _showMaterialExitDialog(context);
-            }else if(Platform.isIOS){
-              _showCupertinoExitDialog(context);
-            }
+            Platform.isIOS
+                ? _showCupertinoExitDialog()
+                : _showMaterialExitDialog();
           },
           icon: const Icon(Icons.arrow_back_ios_new),
         ),
@@ -183,8 +203,6 @@ class _GameState extends State<Game> {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
-
-            /// Progress
             Row(
               children: [
                 Expanded(
@@ -195,7 +213,8 @@ class _GameState extends State<Game> {
                     thumbColor: const Color(0xFF7ED421),
                     trackHeight: 10,
                     bufferedPosition: _questions.length.toDouble(),
-                    bufferedColor: const Color(0xFFEBEBEB), onChanged: (double value) {  },
+                    bufferedColor: const Color(0xFFEBEBEB),
+                    onChanged: (double value) {},
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -214,7 +233,6 @@ class _GameState extends State<Game> {
 
             const SizedBox(height: 40),
 
-            /// Question
             Text(
               question.question,
               style: const TextStyle(
@@ -226,7 +244,6 @@ class _GameState extends State<Game> {
 
             const SizedBox(height: 30),
 
-            /// Answers
             Column(
               children: List.generate(
                 question.answers.length,
