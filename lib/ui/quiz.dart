@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/data/GameData.dart';
+import 'package:quiz/ui/speedrun.dart';
 import 'categories.dart';
 
 class Quiz extends StatefulWidget {
@@ -40,16 +41,19 @@ class _QuizState extends State<Quiz> {
                   ),
                   trailing: Icon(Icons.navigate_next),
                   onTap: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),
-                    );
+                    if (GameData().getGameNames()[index] == "Speedrun"){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Speedrun()));
+                    }else{
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Categories(category: GameData().getGameNames()[index], image: GameData().getImagesLocal()[index], desc: GameData().getDescriptions()[index], ID: GameData().getGameIds()[index],)),
+                      );
+                    }
                   },
                 );
               }
             )
           ),
-
         ],
       ),
     );

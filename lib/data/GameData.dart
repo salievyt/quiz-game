@@ -1,8 +1,8 @@
 import '../models/question.dart';
 
 class GameData {
-  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети"];
-  final List<int> gameIds = [1, 2, 3, 4, 5, 6 ,7 ,8];
+  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети", "Speed RUN"];
+  final List<int> gameIds = [1, 2, 3, 4, 5, 6 ,7 ,8, 9];
   final List<String> images = [
     "https://i.ibb.co/k2fJzLgx/logic.jpg",
     "https://i.ibb.co/TxcY9GVk/Geeks.jpg",
@@ -11,10 +11,11 @@ class GameData {
     "",
     "",
     "",
+    "",
     ""
   ];
 
-  static final List<Question> _quizLogic = [
+  static final List<Question> _quizLogic =  [
     Question(question: "Что будет следующим числом: 2, 4, 8, 16, ?", answers: ["32", "24", "18", "30"], correctIndex: 0),
     Question(question: "Продолжи ряд: 1, 1, 2, 3, 5, ?", answers: ["8", "6", "7", "10"], correctIndex: 0),
     Question(question: "Что тяжелее: 1 кг железа или 1 кг ваты?", answers: ["Одинаково", "Железо", "Вата", "Зависит от плотности"], correctIndex: 0),
@@ -774,6 +775,7 @@ class GameData {
     Question(question: "Что такое сторис-архив?", answers: ["Сохранённые сторис","Фото","Пароль","Комментарий"], correctIndex: 0),
     Question(question: "Что такое цифровая гигиена?", answers: ["Безопасное поведение онлайн","Фото","Пароль","Лайк"], correctIndex: 0),
   ];
+  static final List<Question> _quizSpeedRun = [];
 
   final List<String> imagesLocal = [
     "assets/images/logic.jpg",
@@ -783,7 +785,8 @@ class GameData {
     "assets/images/designer.jpg",
     "assets/images/cosmos.jpg",
     "assets/images/science.jpg",
-    "assets/images/socialMedia.jpg"
+    "assets/images/socialMedia.jpg",
+    "assets/images/speedRun.png"
   ];
   final List<String> Icons = [
     "assets/icons/LOGIC_ICON.jpg",
@@ -793,7 +796,8 @@ class GameData {
     "assets/icons/DESIGNER_ICON.jpg",
     "assets/icons/COSMOS_ICON.jpg",
     "assets/icons/SCIENCE_ICON.jpg",
-    "assets/icons/SOCIALMEDIA_ICON.jpg"
+    "assets/icons/SOCIALMEDIA_ICON.jpg",
+    "assets/icons/SPEED_RUN.jpg"
   ];
   final List<String> descriptions = [
     "Это не просто вопросы - это челлендж для твоего интеллекта. Проверь, насколько ты умеешь анализировать, сравнивать и находить скрытые решения.",
@@ -803,7 +807,8 @@ class GameData {
     "Эта категория про культовых дизайнеров, бренды, креатив, стиль и решения, которые изменили визуальный мир.",
     "Любишь звёзды, планеты и всё, что летает быстрее интернета?\nВ этой категории ты узнаешь, сколько планет в Солнечной системе, что такое чёрная дыра, почему Луна не падает и правда ли, что в космосе никто не услышит твой крик. Готов проверить, космический ли у тебя мозг?",
     "Как устроен мир ?\nНаука - это не скучные формулы, а способ понимать реальность. Почему небо голубое? Как работает мозг? Из чего состоит всё вокруг? Проверим, насколько ты будущий учёный.",
-    "Скроллишь каждый день? \nТогда пора узнать, что стоит за лайками и алгоритмами \nСоциальные сети — это не только мемы и сторис. Это алгоритмы, тренды, блогеры, безопасность и влияние на мозг. Насколько ты осознанный пользователь?"
+    "Скроллишь каждый день? \nТогда пора узнать, что стоит за лайками и алгоритмами \nСоциальные сети — это не только мемы и сторис. Это алгоритмы, тренды, блогеры, безопасность и влияние на мозг. Насколько ты осознанный пользователь?",
+    "SEED RUN MODE"
   ];
 
   List<String> getGameNames(){
@@ -843,6 +848,8 @@ class GameData {
         return _quizScience;
       case 8:
         return _quizSocial;
+      case 9:
+        return _quizSpeedRun;
       default:
         return _quizLogic;
     }
