@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'game.dart';
+import '../game/game.dart';
 class Categories extends StatefulWidget {
   String category;
   String image;

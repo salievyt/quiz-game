@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/data/GameData.dart';
-import 'package:quiz/ui/speedrun.dart';
-import 'categories.dart';
+import 'package:quiz/ui/game/speedrun.dart';
+import '../utils/categories.dart';
 
 class Quiz extends StatefulWidget {
   const Quiz({super.key});
@@ -16,9 +16,9 @@ class _QuizState extends State<Quiz> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF8F9FB),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF8F9FB),
         title: Text("Quizzy", style: TextStyle(fontSize: 26,fontFamily: GoogleFonts.sen().fontFamily, fontWeight: FontWeight.bold),),
         centerTitle: true,
       ),

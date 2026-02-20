@@ -1,4 +1,4 @@
-import '../models/question.dart';
+import 'package:quiz/data/models/question.dart';
 
 class GameData {
   final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети", "Speed RUN"];

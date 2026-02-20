@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/data/gamedata.dart';
-import 'package:quiz/models/question.dart';
+import 'package:quiz/data/models/question.dart';
 import 'package:my_progress_bar/progress_bar.dart';
 
 class Game extends StatefulWidget {
@@ -162,7 +162,6 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    // 🔒 Защита от пустых данных
     if (_questions.isEmpty) {
       return const Scaffold(
         body: Center(
@@ -185,9 +184,9 @@ class _GameState extends State<Game> {
     final question = _questions[_currentIndex];
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFF8F9FB),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFFF8F9FB),
         title: const Text("Игра"),
         centerTitle: true,
         leading: IconButton(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/ui/quiz.dart';
+import 'package:quiz/ui/BottomNav/navigation.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const Quiz()),
+      MaterialPageRoute(builder: (_) => Navigation()),
     );
   }
 
