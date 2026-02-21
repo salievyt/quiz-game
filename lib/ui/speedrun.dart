@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:my_progress_bar/progress_bar.dart';
 
-import '../models/question.dart';
+import '../data/models/question.dart';
 import '../data/gamedata.dart';
 import 'ResultScreen.dart';
 

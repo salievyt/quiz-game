@@ -6,7 +6,8 @@ class Categories extends StatefulWidget {
   String image;
   String desc;
   int ID;
-  Categories({super.key, required this.category, required this.image, required this.desc, required this.ID});
+  String heroTag;
+  Categories({super.key, required this.category, required this.image, required this.desc, required this.ID, required  this.heroTag});
 
   @override
   State<Categories> createState() => _CategoriesState();
@@ -15,6 +16,7 @@ class Categories extends StatefulWidget {
 class _CategoriesState extends State<Categories> {
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

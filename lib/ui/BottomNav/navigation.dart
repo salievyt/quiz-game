@@ -6,6 +6,7 @@ import 'dart:io';
 import 'package:quiz/ui/game/quiz.dart';
 import 'package:quiz/ui/leaderboards/leaderboards.dart';
 import 'package:quiz/ui/profile/profile.dart';
+import 'package:quiz/ui/statistics/statistics.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -23,6 +24,7 @@ class _NavigationState extends State<Navigation> {
   final List<Widget> _pages = [
     Quiz(),
     Leaderboards(),
+    StatisticsScreen(),
     Profile()
   ];
 
@@ -64,6 +66,10 @@ class _NavigationState extends State<Navigation> {
                 GButton(
                   icon: Icons.leaderboard,
                   text: 'Leaderboards',
+                ),
+                GButton(
+                  icon: Icons.bar_chart,
+                  text: 'Statistics',
                 ),
                 GButton(
                   icon: Icons.person,
