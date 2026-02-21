@@ -9,5 +9,5 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MaterialApp(home: SplashScreen(), debugShowCheckedModeBanner: false,));
+  runApp(MaterialApp(home: SplashScreen(), debugShowCheckedModeBanner: false));
 }
