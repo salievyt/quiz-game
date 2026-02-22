@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:io';
-
+import 'package:provider/provider.dart';
+import 'package:quiz/ui/providers/theme_provider.dart';
+import 'package:quiz/ui/services/sound_manager.dart';
 
 class Settings extends StatefulWidget {
   const Settings({super.key});
@@ -10,30 +11,43 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final SoundManager _soundManager = SoundManager();
 
-  bool soundEnabled = true;
-  bool vibrationEnabled = true;
-  bool notificationsEnabled = true;
-  bool darkMode = false;
+  bool _soundEnabled = true;
+  bool _vibrationEnabled = true;
+  bool _notificationsEnabled = true;
 
+  @override
+  void initState() {
+    super.initState();
+    _soundEnabled = _soundManager.soundEnabled;
+    _vibrationEnabled = _soundManager.vibrationEnabled;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: backgroundColor,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Настройки",
           style: TextStyle(
-            color: Colors.black,
+            color: textColor,
             fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          icon: Icon(Icons.arrow_back_ios_new, color: textColor),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -41,79 +55,101 @@ class _SettingsState extends State<Settings> {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
 
-          _sectionTitle("Аккаунт"),
+          _sectionTitle("Аккаунт", textColor),
           _settingsTile(
             icon: Icons.person,
             title: "Редактировать профиль",
             onTap: () {},
+            cardColor: cardColor,
+            textColor: textColor,
           ),
           _settingsTile(
             icon: Icons.lock,
             title: "Сменить пароль",
             onTap: () {},
+            cardColor: cardColor,
+            textColor: textColor,
           ),
 
           const SizedBox(height: 25),
 
-          _sectionTitle("Игровые настройки"),
+          _sectionTitle("Игровые настройки", textColor),
           _switchTile(
             icon: Icons.volume_up,
             title: "Звук",
-            value: soundEnabled,
+            value: _soundEnabled,
             onChanged: (value) {
-              setState(() => soundEnabled = value);
+              setState(() => _soundEnabled = value);
+              _soundManager.setSoundEnabled(value);
             },
+            cardColor: cardColor,
+            textColor: textColor,
           ),
           _switchTile(
             icon: Icons.vibration,
             title: "Вибрация",
-            value: vibrationEnabled,
+            value: _vibrationEnabled,
             onChanged: (value) {
-              setState(() => vibrationEnabled = value);
+              setState(() => _vibrationEnabled = value);
+              _soundManager.setVibrationEnabled(value);
+              if (value) {
+                _soundManager.play(SoundType.click);
+              }
             },
+            cardColor: cardColor,
+            textColor: textColor,
           ),
 
           const SizedBox(height: 25),
 
-          _sectionTitle("Уведомления"),
+          _sectionTitle("Уведомления", textColor),
           _switchTile(
             icon: Icons.notifications,
             title: "Push-уведомления",
-            value: notificationsEnabled,
+            value: _notificationsEnabled,
             onChanged: (value) {
-              setState(() => notificationsEnabled = value);
+              setState(() => _notificationsEnabled = value);
             },
+            cardColor: cardColor,
+            textColor: textColor,
           ),
 
           const SizedBox(height: 25),
 
-          _sectionTitle("Внешний вид"),
+          _sectionTitle("Внешний вид", textColor),
           _switchTile(
             icon: Icons.dark_mode,
             title: "Тёмная тема",
-            value: darkMode,
+            value: themeProvider.isDarkMode,
             onChanged: (value) {
-              setState(() => darkMode = value);
+              themeProvider.toggleTheme();
+              _soundManager.play(SoundType.click);
             },
+            cardColor: cardColor,
+            textColor: textColor,
           ),
 
           const SizedBox(height: 25),
 
-          _sectionTitle("О приложении"),
+          _sectionTitle("О приложении", textColor),
           _settingsTile(
             icon: Icons.info_outline,
-            title: "Версия 1.4.0",
+            title: "Версия 1.5.0",
             onTap: () {},
+            cardColor: cardColor,
+            textColor: textColor,
           ),
           _settingsTile(
             icon: Icons.privacy_tip,
             title: "Политика конфиденциальности",
             onTap: () {},
+            cardColor: cardColor,
+            textColor: textColor,
           ),
 
           const SizedBox(height: 30),
 
-          _dangerButton(),
+          _dangerButton(cardColor),
 
           const SizedBox(height: 40),
         ],
@@ -121,14 +157,15 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  Widget _sectionTitle(String title) {
+  Widget _sectionTitle(String title, Color textColor) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.bold,
+          color: textColor,
         ),
       ),
     );
@@ -138,11 +175,13 @@ class _SettingsState extends State<Settings> {
     required IconData icon,
     required String title,
     required VoidCallback onTap,
+    required Color cardColor,
+    required Color textColor,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -154,9 +193,9 @@ class _SettingsState extends State<Settings> {
       ),
       child: ListTile(
         onTap: onTap,
-        leading: Icon(icon, color: Colors.black),
-        title: Text(title),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+        leading: Icon(icon, color: textColor),
+        title: Text(title, style: TextStyle(color: textColor)),
+        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),
       ),
     );
   }
@@ -166,11 +205,13 @@ class _SettingsState extends State<Settings> {
     required String title,
     required bool value,
     required Function(bool) onChanged,
+    required Color cardColor,
+    required Color textColor,
   }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
@@ -183,14 +224,14 @@ class _SettingsState extends State<Settings> {
       child: SwitchListTile(
         value: value,
         onChanged: onChanged,
-        secondary: Icon(icon),
-        title: Text(title),
+        secondary: Icon(icon, color: textColor),
+        title: Text(title, style: TextStyle(color: textColor)),
         activeColor: const Color(0xFF7ED421),
       ),
     );
   }
 
-  Widget _dangerButton() {
+  Widget _dangerButton(Color cardColor) {
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -204,8 +245,7 @@ class _SettingsState extends State<Settings> {
                 child: const Text("Отмена"),
               ),
               TextButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: const Text(
                   "Выйти",
                   style: TextStyle(color: Colors.red),
