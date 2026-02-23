@@ -68,7 +68,7 @@ class _NavigationState extends State<Navigation> {
                   text: 'Leaderboards',
                 ),
                 GButton(
-                  icon: Icons.bar_chart,
+                  icon: Icons.donut_large,
                   text: 'Statistics',
                 ),
                 GButton(
