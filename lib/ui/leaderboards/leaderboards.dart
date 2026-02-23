@@ -25,10 +25,17 @@ class _LeaderboardsState extends State<Leaderboards> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black87;
+    final subtitleColor = isDark ? Colors.grey[400]! : Colors.grey!;
+
     players.sort((a, b) => b["score"].compareTo(a["score"]));
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF8F9FB),
+      backgroundColor: backgroundColor,
       body: Column(
         children: [
 
@@ -39,9 +46,9 @@ class _LeaderboardsState extends State<Leaderboards> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              _buildTopPlayer(players[1], 2, 120),
-              _buildTopPlayer(players[0], 1, 150),
-              _buildTopPlayer(players[2], 3, 110),
+              _buildTopPlayer(players[1], 2, 120, isDark, textColor),
+              _buildTopPlayer(players[0], 1, 150, isDark, textColor),
+              _buildTopPlayer(players[2], 3, 110, isDark, textColor),
             ],
           ),
 
@@ -58,6 +65,10 @@ class _LeaderboardsState extends State<Leaderboards> {
                   player["name"],
                   player["score"],
                   index + 4,
+                  cardColor: cardColor,
+                  textColor: textColor,
+                  subtitleColor: subtitleColor,
+                  isDark: isDark,
                 );
               },
             ),
@@ -67,7 +78,7 @@ class _LeaderboardsState extends State<Leaderboards> {
     );
   }
 
-  Widget _buildTopPlayer(Map<String, dynamic> player, int place, double height) {
+  Widget _buildTopPlayer(Map<String, dynamic> player, int place, double height, bool isDark, Color textColor) {
     Color medalColor;
 
     switch (place) {
@@ -98,9 +109,12 @@ class _LeaderboardsState extends State<Leaderboards> {
         const SizedBox(height: 8),
         Text(
           player["name"],
-          style: const TextStyle(fontWeight: FontWeight.bold),
+          style: TextStyle(fontWeight: FontWeight.bold, color: textColor),
         ),
-        Text("${player["score"]} pts"),
+        Text(
+          "${player["score"]} pts",
+          style: TextStyle(color: isDark ? Colors.grey[400] : Colors.grey!),
+        ),
         const SizedBox(height: 10),
         Container(
           width: 60,
@@ -114,16 +128,21 @@ class _LeaderboardsState extends State<Leaderboards> {
     );
   }
 
-  Widget _buildPlayerTile(String name, int score, int rank) {
+  Widget _buildPlayerTile(String name, int score, int rank, {
+    required Color cardColor,
+    required Color textColor,
+    required Color subtitleColor,
+    required bool isDark,
+  }) {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: cardColor,
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: isDark ? Colors.black.withOpacity(0.3) : Colors.black.withOpacity(0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -133,22 +152,24 @@ class _LeaderboardsState extends State<Leaderboards> {
         children: [
           Text(
             "#$rank",
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
+              color: textColor,
             ),
           ),
           const SizedBox(width: 20),
           Expanded(
             child: Text(
               name,
-              style: const TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: 16, color: textColor),
             ),
           ),
           Text(
             "$score pts",
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.bold,
+              color: textColor,
             ),
           ),
         ],

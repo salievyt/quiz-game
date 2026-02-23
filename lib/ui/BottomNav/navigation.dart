@@ -30,6 +30,12 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
+    final backgroundColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black;
+    final shadowColor = Colors.black.withOpacity(isDark ? 0.3 : 0.1);
+
     return Scaffold(
       body: IndexedStack(
         index: _currentIndex,
@@ -37,11 +43,11 @@ class _NavigationState extends State<Navigation> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: backgroundColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
+              color: shadowColor,
             )
           ],
         ),
@@ -49,31 +55,31 @@ class _NavigationState extends State<Navigation> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Colors.grey[300]!,
-              hoverColor: Colors.grey[100]!,
+              rippleColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
+              hoverColor: isDark ? Colors.grey[800]! : Colors.grey[100]!,
               gap: 8,
               activeColor: Colors.white,
               iconSize: 24,
               padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               duration: Duration(milliseconds: 400),
               tabBackgroundColor: Color(0xFF7ED421)!,
-              color: Colors.black,
+              color: isDark ? Colors.grey[400]! : Colors.black,
               tabs: [
                 GButton(
                   icon: Icons.home,
-                  text: 'Home',
+                  text: 'Главная',
                 ),
                 GButton(
                   icon: Icons.leaderboard,
-                  text: 'Leaderboards',
+                  text: 'Топ',
                 ),
                 GButton(
-                  icon: Icons.bar_chart,
-                  text: 'Statistics',
+                  icon: Icons.donut_large,
+                  text: 'Статистика',
                 ),
                 GButton(
                   icon: Icons.person,
-                  text: 'Profile',
+                  text: 'Профиль',
                 ),
               ],
               selectedIndex: _currentIndex,

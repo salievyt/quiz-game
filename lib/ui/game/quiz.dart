@@ -31,20 +31,25 @@ class _QuizState extends State<Quiz> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final games = GameData().getGameNames();
 
+    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF4F6FA);
+    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
+    final textColor = isDark ? Colors.white : Colors.black87;
+
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FA),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFFF4F6FA),
+        backgroundColor: backgroundColor,
         centerTitle: true,
         title: Text(
           "Quizzy",
           style: GoogleFonts.sen(
             fontSize: 28,
             fontWeight: FontWeight.bold,
-            color: Colors.black87,
+            color: textColor,
           ),
         ),
       ),
@@ -78,8 +83,11 @@ class _QuizState extends State<Quiz> with TickerProviderStateMixin {
                   image: GameData().getImagesLocal()[index],
                   description: GameData().getDescriptions()[index],
                   id: GameData().getGameIds()[index],
-                  isSpeedrun: index == 8,
-                  isNew: index == 8, // пример — первая категория новая
+                  isSpeedrun: index == 11,
+                  isNew: index >= 8,
+                  isDark: isDark,
+                  cardColor: cardColor,
+                  textColor: textColor,
                 ),
               ),
             );
@@ -99,6 +107,9 @@ class _GameCard extends StatelessWidget {
   final int id;
   final bool isSpeedrun;
   final bool isNew;
+  final bool isDark;
+  final Color cardColor;
+  final Color textColor;
 
   const _GameCard({
     required this.heroTag,
@@ -109,6 +120,9 @@ class _GameCard extends StatelessWidget {
     required this.id,
     required this.isSpeedrun,
     required this.isNew,
+    required this.isDark,
+    required this.cardColor,
+    required this.textColor,
   });
 
   @override
@@ -140,11 +154,11 @@ class _GameCard extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: cardColor,
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.05),
+                color: isDark ? Colors.black.withOpacity(0.3) : Colors.black.withOpacity(0.05),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
               )
@@ -178,7 +192,7 @@ class _GameCard extends StatelessWidget {
 
               Row(
                 children: [
-                  /// 🎯 ОДИН Hero — только иконка
+          
                   Hero(
                     tag: "${heroTag}_icon",
                     child: Container(
@@ -202,15 +216,15 @@ class _GameCard extends StatelessWidget {
                       style: GoogleFonts.sen(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: Colors.black87,
+                        color: textColor,
                       ),
                     ),
                   ),
 
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 18,
-                    color: Colors.grey,
+                    color: isDark ? Colors.grey[400] : Colors.grey,
                   ),
                 ],
               ),

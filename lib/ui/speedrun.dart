@@ -38,7 +38,7 @@ class _SpeedrunState extends State<Speedrun> {
 
   void _loadQuestions() {
     // Берём ВСЕ вопросы из GameData
-    _questions = GameData.getQuiz(9);
+    _questions = GameData.getQuiz(12);
     _questions.shuffle();
 
     // Перемешиваем ответы
