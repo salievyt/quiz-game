@@ -134,7 +134,7 @@ class _SettingsState extends State<Settings> {
           _sectionTitle("О приложении", textColor),
           _settingsTile(
             icon: Icons.info_outline,
-            title: "Версия 1.5.0",
+            title: "Версия 2.0.0",
             onTap: () {},
             cardColor: cardColor,
             textColor: textColor,
@@ -142,7 +142,21 @@ class _SettingsState extends State<Settings> {
           _settingsTile(
             icon: Icons.privacy_tip,
             title: "Политика конфиденциальности",
-            onTap: () {},
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: const Text("Политика конфиденциальности"),
+                  content: const Text("Вы принимаете условия политики конфиденциальности"),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text("Отмена"),
+                    ),
+                  ]
+                )
+              );
+            },
             cardColor: cardColor,
             textColor: textColor,
           ),

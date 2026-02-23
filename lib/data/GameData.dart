@@ -1,8 +1,8 @@
 import 'package:quiz/data/models/question.dart';
 
 class GameData {
-  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети", "Speed RUN"];
-  final List<int> gameIds = [1, 2, 3, 4, 5, 6 ,7 ,8, 9];
+  final List<String> gameNames = ["Логикичеткая", "Geeks", "Для детей", "Основы ислама", "Дизайнер века", "Космос", "Наука", "Соцеальные сети","История","Музыка","География", "Speed RUN"];
+  final List<int> gameIds = [1, 2, 3, 4, 5, 6 ,7 ,8, 9,10,11,12];
   final List<String> images = [
     "https://i.ibb.co/k2fJzLgx/logic.jpg",
     "https://i.ibb.co/TxcY9GVk/Geeks.jpg",
@@ -13,6 +13,109 @@ class GameData {
     "",
     "",
     ""
+  ];
+
+  static final List<Question> _quizHistory = [
+    Question(question: "В каком году началась Вторая мировая война?", answers: ["1939", "1940", "1941", "1938"], correctIndex: 0),
+    Question(question: "Кто был первым президентом США?", answers: ["Вашингтон", "Линкольн", "Джефферсон", "Адамс"], correctIndex: 0),
+    Question(question: "В каком году распался СССР?", answers: ["1991", "1990", "1992", "1989"], correctIndex: 0),
+    Question(question: "Кто построил пирамиду Хеопса?", answers: ["Египтяне", "Греки", "Римляне", "Персы"], correctIndex: 0),
+    Question(question: "В каком году был основан город Москва?", answers: ["1147", "1247", "1047", "994"], correctIndex: 0),
+    Question(question: "Кто открыл Америку в 1492 году?", answers: ["Колумб","Магеллан","Васко да Гама","Америго Веспуччи"], correctIndex: 0),
+    Question(question: "Сколько длилась Столетняя война?", answers: ["116 лет","100 лет","150 лет","80 лет"], correctIndex: 0),
+    Question(question: "Кто был последним русским царём?", answers: ["Николай II","Александр III","Пётр I","Иван Грозный"], correctIndex: 0),
+    Question(question: "В каком году произошла Октябрьская революция?", answers: ["1917","1918","1916","1919"], correctIndex: 0),
+    Question(question: "Какая древняя цивилизация построила Мачу-Пикчу?", answers: ["Инки","Майя","Ацтеки","Египтяне"], correctIndex: 0),
+    Question(question: "Кто изобрёл печатный станок?", answers: ["Гуттенберг","Да Винчи","Эдисон","Ньютон"], correctIndex: 0),
+    Question(question: "В каком году началась Великая отечественная война?", answers: ["1941","1939","1940","1942"], correctIndex: 0),
+    Question(question: "Кто был Александром Македонским?", answers: ["Царь и полководец","Философ","Врач","Поэт"], correctIndex: 0),
+    Question(question: "Какой город был столицей Римской империи?", answers: ["Рим","Афины","Константинополь","Карфаген"], correctIndex: 0),
+    Question(question: "В каком году Куликовская битва?", answers: ["1380","1370","1390","1360"], correctIndex: 0),
+    Question(question: "Кто такие викинги?", answers: ["Скандинавские воины","Греческие философы","Римские легионеры","Египетские жрецы"], correctIndex: 0),
+    Question(question: "Что такое Великий шёлковый путь?", answers: ["Торговый маршрут","Дорога","Река","Гора"], correctIndex: 0),
+    Question(question: "Кто такой Чингисхан?", answers: ["Основатель Монгольской империи","Китайский император","Персидский шах","Русский князь"], correctIndex: 0),
+    Question(question: "В каком году был основан Санкт-Петербург?", answers: ["1703","1603","1803","1503"], correctIndex: 0),
+    Question(question: "Что означает слово 'демократия'?", answers: ["Власть народа","Власть царя","Власть церкви","Власть военных"], correctIndex: 0),
+    Question(question: "Кто написал 'Войну и мир'?", answers: ["Толстой","Пушкин","Достоевский","Гоголь"], correctIndex: 0),
+    Question(question: "Какое событие начало Французскую революцию?", answers: ["Штурм Бастилии","Взятие Версаля","Декларация прав","Казнь короля"], correctIndex: 0),
+    Question(question: "Кто такой Юлий Цезарь?", answers: ["Римский полководец","Греческий философ","Египетский фараон","Персидский царь"], correctIndex: 0),
+    Question(question: "В каком году крестили Русь?", answers: ["988","998","978","1088"], correctIndex: 0),
+    Question(question: "Что такое Ренессанс?", answers: ["Эпоха возрождения","Война","Эпидемия","Революция"], correctIndex: 0),
+    Question(question: "Кто был Наполеон Бонапарт?", answers: ["Французский император","Английский король","Немецкий канцлер","Итальянский герцог"], correctIndex: 0),
+    Question(question: "Что такое индустриализация?", answers: ["Переход к фабричному производству","Сельское хозяйство","Торговля","Ремесло"], correctIndex: 0),
+    Question(question: "Когда была построена Берлинская стена?", answers: ["1961","1951","1971","1941"], correctIndex: 0),
+    Question(question: "Что означает 'средние века'?", answers: ["Период между древностью и новым временем","Все века","Эпоха возрождения","Новое время"], correctIndex: 0),
+    Question(question: "Кто такой Карл Великий?", answers: ["Франкский король и император","Римский папа","Византийский император","Арабский халиф"], correctIndex: 0),
+  ];
+
+  // Категория 11: Музыка
+  static final List<Question> _quizMusic = [
+    Question(question: "Сколько нот в музыке?", answers: ["7","5","8","6"], correctIndex: 0),
+    Question(question: "Кто написал симфонию №5?", answers: ["Бетховен","Моцарт","Чайковский","Бах"], correctIndex: 0),
+    Question(question: "Что такое октава?", answers: ["Интервал из 8 ступеней","Нота","Инструмент","Темп"], correctIndex: 0),
+    Question(question: "Какой инструмент главный в симфоническом оркестре?", answers: ["Скрипка","Пианино","Саксофон","Барабан"], correctIndex: 0),
+    Question(question: "Что такое пианино?", answers: ["Клавишный инструмент","Струнный","Духовой","Ударный"], correctIndex: 0),
+    Question(question: "Кто такие 'Битлз'?", answers: ["Музыкальная группа","Танец","Инструмент","Нота"], correctIndex: 0),
+    Question(question: "Что такое нота?", answers: ["Звук определённой высоты","Инструмент","Песня","Темп"], correctIndex: 0),
+    Question(question: "Какой инструмент играет на струнах?", answers: ["Гитара","Труба","Флейта","Барабан"], correctIndex: 0),
+    Question(question: "Что такое ритм?", answers: ["Чередование звуков и пауз","Высота звука","Громкость","Темп"], correctIndex: 0),
+    Question(question: "Кто написал 'Щелкунчика'?", answers: ["Чайковский","Бетховен","Моцарт","Шопен"], correctIndex: 0),
+    Question(question: "Сколько струн у скрипки?", answers: ["4","6","5","3"], correctIndex: 0),
+    Question(question: "Что такое аккорд?", answers: ["Сочетание нескольких звуков","Один звук","Темп","Ритм"], correctIndex: 0),
+    Question(question: "Какой инструмент самый большой в оркестре?", answers: ["Контрабас","Скрипка","Арфа","Флейта"], correctIndex: 0),
+    Question(question: "Что такое фортепиано?", answers: ["Клавишный инструмент","Струнный","Духовой","Ударный"], correctIndex: 0),
+    Question(question: "Кто сочинял балеты?", answers: ["Чайковский","Пушкин","Гоголь","Толстой"], correctIndex: 0),
+    Question(question: "Что такое мелодия?", answers: ["Основная музыкальная линия","Ритм","Аккорд","Темп"], correctIndex: 0),
+    Question(question: "Какой инструмент древнерусский?", answers: ["Гусли","Скрипка","Пианино","Саксофон"], correctIndex: 0),
+    Question(question: "Что такое темп?", answers: ["Скорость исполнения","Громкость","Высота","Ритм"], correctIndex: 0),
+    Question(question: "Кто написал 'Лунную сонату'?", answers: ["Бетховен","Моцарт","Шопен","Шуберт"], correctIndex: 0),
+    Question(question: "Что такое громкость?", answers: ["Сила звука","Высота","Скорость","Ритм"], correctIndex: 0),
+    Question(question: "Сколько клавиш на фортепиано?", answers: ["88","76","66","100"], correctIndex: 0),
+    Question(question: "Какой инструмент духовой?", answers: ["Флейта","Гитара","Скрипка","Барабан"], correctIndex: 0),
+    Question(question: "Что такое музыкальный размер?", answers: ["Чередование сильных и слабых долей","Количество нот","Темп","Высота"], correctIndex: 0),
+    Question(question: "Кто такой дирижёр?", answers: ["Управляет оркестром","Играет на скрипке","Поёт","Композитор"], correctIndex: 0),
+    Question(question: "Что такое квартет?", answers: ["Ансамбль из 4 музыкантов","Песня","Танец","Инструмент"], correctIndex: 0),
+    Question(question: "Какой инструмент ударный?", answers: ["Барабан","Скрипка","Флейта","Гитара"], correctIndex: 0),
+    Question(question: "Что такое гармония?", answers: ["Созвучие аккордов","Ритм","Темп","Мелодия"], correctIndex: 0),
+    Question(question: "Кто написал оперу 'Евгений Онегин'?", answers: ["Чайковский","Мусоргский","Римский-Корсаков","Глинка"], correctIndex: 0),
+    Question(question: "Что такое соло?", answers: ["Исполнение одним музыкантом","Хор","Оркестр","Ансамбль"], correctIndex: 0),
+    Question(question: "Какой инструмент клавишный?", answers: ["Орган","Саксофон","Тромбон","Виолончель"], correctIndex: 0),
+    Question(question: "Что такое хор?", answers: ["Ансамбль певцов","Оркестр","Танцоры","Инструменты"], correctIndex: 0),
+  ];
+
+  // Категория 12: География
+  static final List<Question> _quizGeography = [
+    Question(question: "Какая самая большая страна в мире?", answers: ["Россия","Китай","США","Канада"], correctIndex: 0),
+    Question(question: "Какой океан самый большой?", answers: ["Тихий","Атлантический","Индийский","Северный Ледовитый"], correctIndex: 0),
+    Question(question: "Какая река самая длинная в мире?", answers: ["Нил","Амазонка","Волга","Миссисипи"], correctIndex: 0),
+    Question(question: "Какая гора самая высокая в мире?", answers: ["Эверест","Килиманджаро","Монблан","Арарат"], correctIndex: 0),
+    Question(question: "Какой материк самый большой?", answers: ["Азия","Африка","Америка","Европа"], correctIndex: 0),
+    Question(question: "Сколько континентов на Земле?", answers: ["6","5","7","4"], correctIndex: 0),
+    Question(question: "Какая страна имеет больше всего населения?", answers: ["Китай","Индия","США","Россия"], correctIndex: 0),
+    Question(question: "Какое море самое солёное?", answers: ["Красное","Чёрное","Средиземное","Балтийское"], correctIndex: 0),
+    Question(question: "Какой самый маленький континент?", answers: ["Австралия","Европа","Антарктида","Африка"], correctIndex: 0),
+    Question(question: "Какая пустыня самая большая?", answers: ["Сахара","Гоби","Атакама","Каракумы"], correctIndex: 0),
+    Question(question: "Сколько стран в Европе?", answers: ["Около 50","Около 30","Около 70","Около 20"], correctIndex: 0),
+    Question(question: "Какая река течёт через Москву?", answers: ["Москва-река","Волга","Нева","Дон"], correctIndex: 0),
+    Question(question: "Какой полуостров самый большой?", answers: ["Аравийский","Балканский","Аппенинский","Корейский"], correctIndex: 0),
+    Question(question: "Где находится Эйфелева башня?", answers: ["Париж","Лондон","Рим","Берлин"], correctIndex: 0),
+    Question(question: "Какое озеро самое глубокое в мире?", answers: ["Байкал","Каспийское","Ладожское","Виктория"], correctIndex: 0),
+    Question(question: "Какой город является столицей Японии?", answers: ["Токио","Осака","Киото","Хиросима"], correctIndex: 0),
+    Question(question: "Что такое остров?", answers: ["Суша со всех сторон окружённая водой","Гора","Пустыня","Озеро"], correctIndex: 0),
+    Question(question: "Какая река самая длинная в России?", answers: ["Обь","Волга","Енисей","Лена"], correctIndex: 0),
+    Question(question: "Где находится Колизей?", answers: ["Рим","Афины","Париж","Лондон"], correctIndex: 0),
+    Question(question: "Какой самый высокий водопад в мире?", answers: ["Анхель","Ниагара","Игуасу","Виктория"], correctIndex: 0),
+    Question(question: "Что такое материк?", answers: ["Огромный участок суши","Остров","Озеро","Гора"], correctIndex: 0),
+    Question(question: "Сколько морей омывает Россию?", answers: ["12","5","8","15"], correctIndex: 0),
+    Question(question: "Какая страна имеет форму сапога?", answers: ["Италия","Испания","Греция","Португалия"], correctIndex: 0),
+    Question(question: "Что такое вулкан?", answers: ["Гора с кратером","Озеро","Остров","Река"], correctIndex: 0),
+    Question(question: "Какое море самое маленькое?", answers: ["Мёртвое","Чёрное","Каспийское","Балтийское"], correctIndex: 0),
+    Question(question: "Где находится пирамида Хеопса?", answers: ["Египет","Мексика","Греция","Индия"], correctIndex: 0),
+    Question(question: "Что такое климат?", answers: ["Многолетний режим погоды","Погода за день","Температура","Ветер"], correctIndex: 0),
+    Question(question: "Какой самый длинный пролив?", answers: ["Мозамбикский","Гибралтарский","Берингов","Ла-Манш"], correctIndex: 0),
+    Question(question: "Что такое экватор?", answers: ["Условная линия вокруг Земли","Гора","Остров","Река"], correctIndex: 0),
+    Question(question: "Какая страна находится на островах?", answers: ["Япония","Россия","Китай","Индия"], correctIndex: 0),
+    Question(question: "Что такое пустыня?", answers: ["Засушливая местность","Лес","Океан","Гора"], correctIndex: 0),
   ];
 
   static final List<Question> _quizLogic =  [
@@ -954,18 +1057,24 @@ class GameData {
     "assets/images/cosmos.jpg",
     "assets/images/science.jpg",
     "assets/images/socialMedia.jpg",
+    "assets/images/history.jpg",
+    "assets/images/music.jpg",
+    "assets/images/geography.jpg",
     "assets/images/speedRun.png"
   ];
   final List<String> Icons = [
-    "assets/icons/LOGIC_ICON.jpg",
-    "assets/icons/GEEKS_ICON.jpg",
-    "assets/icons/JUNIOR_ICON.jpg",
-    "assets/icons/ISLAM_ICON.jpg",
-    "assets/icons/DESIGNER_ICON.jpg",
-    "assets/icons/COSMOS_ICON.jpg",
-    "assets/icons/SCIENCE_ICON.jpg",
-    "assets/icons/SOCIALMEDIA_ICON.jpg",
-    "assets/icons/SPEED_RUN.jpg"
+    "assets/icons/LOGIC_ICON.png",
+    "assets/icons/GEEKS_ICON.png",
+    "assets/icons/JUNIOR_ICON.png",
+    "assets/icons/ISLAM_ICON.png",
+    "assets/icons/DESIGNER_ICON.png",
+    "assets/icons/COSMOS_ICON.png",
+    "assets/icons/SCIENCE_ICON.png",
+    "assets/icons/SOCIALMEDIA_ICON.png",
+    "assets/icons/HISTORY_ICON.png",
+    "assets/icons/MUSIC_ICON.png",
+    "assets/icons/GEOGRAPHY_ICON.png",
+    "assets/icons/SPEED_RUN.png",
   ];
   final List<String> descriptions = [
     "Это не просто вопросы - это челлендж для твоего интеллекта. Проверь, насколько ты умеешь анализировать, сравнивать и находить скрытые решения.",
@@ -976,6 +1085,9 @@ class GameData {
     "Любишь звёзды, планеты и всё, что летает быстрее интернета?\nВ этой категории ты узнаешь, сколько планет в Солнечной системе, что такое чёрная дыра, почему Луна не падает и правда ли, что в космосе никто не услышит твой крик. Готов проверить, космический ли у тебя мозг?",
     "Как устроен мир ?\nНаука - это не скучные формулы, а способ понимать реальность. Почему небо голубое? Как работает мозг? Из чего состоит всё вокруг? Проверим, насколько ты будущий учёный.",
     "Скроллишь каждый день? \nТогда пора узнать, что стоит за лайками и алгоритмами \nСоциальные сети — это не только мемы и сторис. Это алгоритмы, тренды, блогеры, безопасность и влияние на мозг. Насколько ты осознанный пользователь?",
+    "Проверь, насколько хорошо ты знаешь прошлое человечества — от древних цивилизаций до современных событий.",
+    "Узнай, насколько ты шаришь в хитах, артистах и музыкальных трендах.",
+    "Проверь, сможешь ли ты найти любую точку на карте без Google Maps",
     "SEED RUN MODE"
   ];
 
@@ -1017,9 +1129,17 @@ class GameData {
       case 8:
         return _quizSocial;
       case 9:
+        return _quizHistory;
+      case 10:
+        return _quizMusic;
+      case 11:
+        return _quizGeography;
+      case 12:
         return _quizSpeedRun;
       default:
         return _quizLogic;
     }
   }
 }
+  // Категория 10: История
+  

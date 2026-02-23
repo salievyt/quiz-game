@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/ui/providers/theme_provider.dart';
 import 'package:quiz/ui/providers/game_provider.dart';
+import 'package:quiz/ui/providers/quest_provider.dart';
 import 'package:quiz/ui/utils/splash_screen.dart';
 
 import 'firebase_options.dart';
@@ -14,18 +15,20 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Инициализируем провайдеры
   final themeProvider = ThemeProvider();
   final gameProvider = GameProvider();
+  final questProvider = QuestProvider();
   
   await themeProvider.init();
   await gameProvider.init();
+  await questProvider.init();
 
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: themeProvider),
         ChangeNotifierProvider.value(value: gameProvider),
+        ChangeNotifierProvider.value(value: questProvider),
       ],
       child: const QuizApp(),
     ),

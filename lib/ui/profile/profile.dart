@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/ui/profile/settings.dart';
 import 'package:quiz/ui/providers/game_provider.dart';
+import 'package:quiz/ui/providers/quest_provider.dart';
 import 'package:quiz/ui/profile/achievements_screen.dart';
+import 'package:quiz/ui/profile/quests_screen.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -149,7 +151,6 @@ class Profile extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            /// 📊 Stats
             Row(
               children: [
                 _StatCard(
@@ -175,7 +176,6 @@ class Profile extends StatelessWidget {
 
             const SizedBox(height: 30),
 
-            /// 🏆 Achievements
             _SectionTitle(
               title: "Достижения", 
               textColor: textColor,
@@ -214,6 +214,11 @@ class Profile extends StatelessWidget {
                   ),
                 );
               },
+              cardColor: cardColor,
+              textColor: textColor,
+            ),
+            const SizedBox(height: 12),
+            _QuestsButton(
               cardColor: cardColor,
               textColor: textColor,
             ),
@@ -461,6 +466,83 @@ class _ActionButton extends StatelessWidget {
           style: TextStyle(
             color: isDestructive ? Colors.red : textColor,
             fontWeight: FontWeight.w500,
+          ),
+        ),
+        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),
+      ),
+    );
+  }
+}
+
+// Кнопка квестов
+class _QuestsButton extends StatelessWidget {
+  final Color cardColor;
+  final Color textColor;
+
+  const _QuestsButton({
+    required this.cardColor,
+    required this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final questProvider = context.watch<QuestProvider>();
+    final completedCount = questProvider.completedCount;
+    final totalCount = questProvider.totalQuests;
+    
+    return Container(
+      decoration: BoxDecoration(
+        color: cardColor,
+        borderRadius: BorderRadius.circular(14),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: ListTile(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const QuestsScreen(),
+            ),
+          );
+        },
+        leading: Stack(
+          children: [
+            Icon(Icons.assignment, color: textColor),
+            if (completedCount < totalCount && completedCount > 0)
+              Positioned(
+                right: -2,
+                top: -2,
+                child: Container(
+                  width: 12,
+                  height: 12,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFFFD700),
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+          ],
+        ),
+        title: Text(
+          "Ежедневные квесты",
+          style: TextStyle(
+            color: textColor,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        subtitle: Text(
+          "$completedCount / $totalCount выполнено",
+          style: TextStyle(
+            color: completedCount == totalCount 
+                ? const Color(0xFF7ED421) 
+                : Colors.grey,
+            fontSize: 12,
           ),
         ),
         trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),

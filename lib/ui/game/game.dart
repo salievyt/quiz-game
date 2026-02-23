@@ -6,6 +6,7 @@ import 'package:quiz/data/gamedata.dart';
 import 'package:quiz/data/models/question.dart';
 import 'package:quiz/models/achievement.dart';
 import 'package:quiz/ui/providers/game_provider.dart';
+import 'package:quiz/ui/providers/quest_provider.dart';
 import 'package:quiz/ui/services/sound_manager.dart';
 import 'package:quiz/ui/game/achievement_dialog.dart';
 import 'package:my_progress_bar/progress_bar.dart';
@@ -85,6 +86,8 @@ class _GameState extends State<Game> {
     
     final isPerfect = _score == _questions.length;
     final gameProvider = context.read<GameProvider>();
+    final questProvider = context.read<QuestProvider>();
+    final points = _score * 10 + (isPerfect ? 50 : 0);
     
     await gameProvider.finishGame(
       correctAnswers: _score,
@@ -92,16 +95,71 @@ class _GameState extends State<Game> {
       isPerfect: isPerfect,
     );
 
+    // Обновляем прогресс квестов
+    final questReward = await questProvider.updateProgress(
+      gamesPlayed: 1,
+      correctAnswers: _score,
+      perfectGames: isPerfect ? 1 : 0,
+      points: points,
+    );
+
     final newAchievements = gameProvider.newAchievements;
 
     if (mounted) {
-      if (newAchievements.isNotEmpty) {
+      // Показываем награду за квесты если есть
+      if (questReward > 0) {
+        _showQuestRewardDialog(questReward, newAchievements);
+      } else if (newAchievements.isNotEmpty) {
         _soundManager.play(SoundType.achievement);
         _showAchievementsDialog(newAchievements);
       } else {
         Platform.isIOS ? _showCupertinoResult() : _showMaterialResult();
       }
     }
+  }
+
+  void _showQuestRewardDialog(int reward, List<Achievement> achievements) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text("🎁", style: TextStyle(fontSize: 50)),
+            const SizedBox(height: 16),
+            const Text(
+              "Награда за квесты!",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              "+$reward очков",
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFFFFD700),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              if (achievements.isNotEmpty) {
+                _soundManager.play(SoundType.achievement);
+                _showAchievementsDialog(achievements);
+              } else {
+                Platform.isIOS ? _showCupertinoResult() : _showMaterialResult();
+              }
+            },
+            child: const Text("Продолжить"),
+          ),
+        ],
+      ),
+    );
   }
 
   void _showAchievementsDialog(List<Achievement> achievements) {
