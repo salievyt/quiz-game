@@ -10,6 +10,11 @@ enum SoundType {
   gameOver,
 }
 
+enum MusicType {
+  game,
+  relax,
+}
+
 class SoundManager {
   static final SoundManager _instance = SoundManager._internal();
   factory SoundManager() => _instance;
@@ -30,6 +35,43 @@ class SoundManager {
 
   void setVibrationEnabled(bool enabled) {
     _vibrationEnabled = enabled;
+  }
+
+  void setMusicEnabled(bool enabled) {
+    _musicEnabled = enabled;
+    if (!enabled) stopMusic();
+  }
+
+  bool _musicEnabled = true;
+  bool _isPlayingMusic = false;
+  final AudioPlayer _musicPlayer = AudioPlayer();
+
+  bool get musicEnabled => _musicEnabled;
+  bool get isPlayingMusic => _isPlayingMusic;
+
+  // Фоновая музыка
+  Future<void> playMusic(MusicType type) async {
+    if (!_musicEnabled || _isPlayingMusic) return;
+    try {
+      _isPlayingMusic = true;
+      await _musicPlayer.setVolume(0.3);
+      // Для реальной музыки добавьте аудиофайл в assets
+    } catch (_) { _isPlayingMusic = false; }
+  }
+
+  Future<void> stopMusic() async {
+    if (!_isPlayingMusic) return;
+    try { await _musicPlayer.stop(); _isPlayingMusic = false; } catch (_) {}
+  }
+
+  Future<void> pauseMusic() async {
+    if (!_isPlayingMusic) return;
+    try { await _musicPlayer.pause(); } catch (_) {}
+  }
+
+  Future<void> resumeMusic() async {
+    if (!_isPlayingMusic || !_musicEnabled) return;
+    try { await _musicPlayer.resume(); } catch (_) {}
   }
 
   // Используем системные звуки вместо аудиофайлов
@@ -63,8 +105,8 @@ class SoundManager {
           await _playSystemSound('gameover');
           break;
       }
-    } catch (e) {
-      // Игнорируем ошибки воспроизведения
+    } catch (_) {
+      // Игнорируем ошибки
     }
   }
 
@@ -105,5 +147,6 @@ class SoundManager {
   void dispose() {
     _player.dispose();
     _effectsPlayer.dispose();
+    _musicPlayer.dispose();
   }
 }
