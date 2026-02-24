@@ -24,6 +24,11 @@ class GameProvider extends ChangeNotifier {
   static const int bonusForPerfectGame = 50;
   static const int streakBonus = 5;
 
+  // Рассчитать монеты из очков (баллы / 10)
+  int calculateCoins(int points) {
+    return points ~/ 10;
+  }
+
   Future<void> init() async {
     if (_isInitialized) return;
 

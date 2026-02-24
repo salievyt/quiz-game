@@ -1,12 +1,8 @@
 name: quiz
-description: "A new Flutter project."
+description: "Quizzy - викторина с питомцами"
 publish_to: 'none'
 
 version: 2.0.0
-
-flutter_localizations:
-  sdk: flutter
-intl: ^0.18.0
 
 environment:
   sdk: ^3.10.1
@@ -14,37 +10,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
   cupertino_icons: ^1.0.8
   google_fonts: ^8.0.1
-  flutter_native_splash: ^2.4.7
-  flutter_launcher_icons: ^0.14.4
-  my_progress_bar: ^2.1.0
   google_nav_bar: ^5.0.7
+  my_progress_bar: ^2.1.0
   firebase_core: ^4.4.0
   firebase_auth: ^6.1.4
   google_sign_in: ^7.2.0
   google_sign_in_ios: ^6.3.0
-  flutter_localization: ^0.3.3
   shared_preferences: ^2.2.2
   provider: ^6.1.1
   audioplayers: ^5.2.1
-
-flutter_native_splash:
-  color: "#FFFFFF"
-  image: assets/images/splash.png
-
-  android_12:
-    color: "#FFFFFF"
-    image: assets/images/splash.png
-
-flutter_icons:
-  android: true
-  ios: true
-  image_path: "assets/images/AppIcon.png"
-  # Optional: For Android adaptive icons (Android 8.0 and above)
-  # adaptive_icon_background: "#ffffff"
-  # adaptive_icon_foreground: "assets/images/foreground.png"
-
 
 dev_dependencies:
   flutter_test:
@@ -54,5 +32,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - "assets/images/"
-    - "assets/icons/"
+    - assets/images/
+    - assets/icons/

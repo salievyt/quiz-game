@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/ui/BottomNav/navigation.dart';
+import 'package:quiz/features/home/presentation/navigation.dart';
 
 
 class SplashScreen extends StatefulWidget {
