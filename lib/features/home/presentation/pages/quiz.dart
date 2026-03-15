@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:quiz/data/gamedata.dart';
+import 'package:quiz/features/home/presentation/viewmodels/home_viewmodel.dart';
 import 'package:quiz/features/game/presentation/pages/speedrun.dart';
 import 'package:quiz/ui/utils/categories.dart';
 
@@ -21,6 +22,11 @@ class _QuizState extends State<Quiz> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 800),
     )..forward();
+
+    // Fetch categories from backend
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<HomeViewModel>().fetchCategories();
+    });
   }
 
   @override
@@ -32,11 +38,40 @@ class _QuizState extends State<Quiz> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final games = GameData().getGameNames();
+    final homeViewModel = context.watch<HomeViewModel>();
 
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF4F6FA);
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF4F6FA);
     final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black87;
+
+    if (homeViewModel.isLoading) {
+      return Scaffold(
+        backgroundColor: backgroundColor,
+        body: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
+    if (homeViewModel.error != null) {
+      return Scaffold(
+        backgroundColor: backgroundColor,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("Ошибка: ${homeViewModel.error}"),
+              ElevatedButton(
+                onPressed: () => homeViewModel.fetchCategories(),
+                child: const Text("Повторить"),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
+    final categories = homeViewModel.categories;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -50,41 +85,44 @@ class _QuizState extends State<Quiz> with TickerProviderStateMixin {
             fontSize: 28,
             fontWeight: FontWeight.bold,
             color: textColor,
-            )
+          ),
         ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: ListView.builder(
-          itemCount: games.length,
+          itemCount: categories.length,
           itemBuilder: (context, index) {
-            final animation = Tween<Offset>(
-              begin: const Offset(0, 0.2),
-              end: Offset.zero,
-            ).animate(
-              CurvedAnimation(
-                parent: _controller,
-                curve: Interval(
-                  (index / games.length),
-                  1,
-                  curve: Curves.easeOut,
-                ),
-              ),
-            );
+            final category = categories[index];
+            final animation =
+                Tween<Offset>(
+                  begin: const Offset(0, 0.2),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: _controller,
+                    curve: Interval(
+                      (index / (categories.isEmpty ? 1 : categories.length))
+                          .clamp(0.0, 1.0),
+                      1,
+                      curve: Curves.easeOut,
+                    ),
+                  ),
+                );
 
             return FadeTransition(
               opacity: _controller,
               child: SlideTransition(
                 position: animation,
                 child: _GameCard(
-                  heroTag: "game_$index",
-                  title: games[index],
-                  icon: GameData().getIcons()[index],
-                  image: GameData().getImagesLocal()[index],
-                  description: GameData().getDescriptions()[index],
-                  id: GameData().getGameIds()[index],
-                  isSpeedrun: index == 11,
-                  isNew: index >= 8 && index <= 10,
+                  heroTag: "game_${category.id}",
+                  title: category.name,
+                  icon: category.iconUrl,
+                  image: category.imageUrl,
+                  description: category.description,
+                  id: category.id,
+                  isSpeedrun: category.name.toLowerCase().contains("speed run"),
+                  isNew: false,
                   isDark: isDark,
                   cardColor: cardColor,
                   textColor: textColor,
@@ -125,6 +163,26 @@ class _GameCard extends StatelessWidget {
     required this.textColor,
   });
 
+  Widget _buildMedia(String path, {bool isIcon = false}) {
+    if (path.startsWith('http')) {
+      return Image.network(
+        path,
+        fit: isIcon ? BoxFit.contain : BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.error_outline),
+      );
+    } else {
+      // Fallback for asset icons/images
+      final assetPath = path.startsWith('assets/') ? path : 'assets/$path';
+      return Image.asset(
+        assetPath,
+        fit: isIcon ? BoxFit.contain : BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) =>
+            const Icon(Icons.broken_image),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -158,23 +216,26 @@ class _GameCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
             boxShadow: [
               BoxShadow(
-                color: isDark ? Colors.black.withValues(alpha: 0.3) : Colors.black.withValues(alpha: 0.05),
+                color: isDark
+                    ? Colors.black.withValues(alpha: 0.3)
+                    : Colors.black.withValues(alpha: 0.05),
                 blurRadius: 12,
                 offset: const Offset(0, 6),
-              )
+              ),
             ],
           ),
           padding: const EdgeInsets.all(18),
           child: Stack(
             children: [
-
               if (isNew)
                 Positioned(
                   right: 0,
                   top: 0,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 4),
+                      horizontal: 10,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
                       color: Colors.redAccent,
                       borderRadius: BorderRadius.circular(12),
@@ -192,7 +253,6 @@ class _GameCard extends StatelessWidget {
 
               Row(
                 children: [
-          
                   Hero(
                     tag: "${heroTag}_icon",
                     child: Container(
@@ -203,7 +263,7 @@ class _GameCard extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(12),
-                        child: Image.asset(icon),
+                        child: _buildMedia(icon, isIcon: true),
                       ),
                     ),
                   ),

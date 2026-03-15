@@ -1,10 +1,15 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz/ui/providers/game_provider.dart';
 import 'package:quiz/ui/providers/quest_provider.dart';
 import 'package:quiz/features/profile/presentation/pages/settings.dart';
 import 'package:quiz/features/profile/presentation/pages/achievements_screen.dart';
 import 'package:quiz/features/profile/presentation/pages/quests_screen.dart';
+import 'package:quiz/features/auth/presentation/viewmodels/auth_viewmodel.dart';
+import 'package:quiz/features/chat/presentation/pages/user_chat_screen.dart';
+import 'package:quiz/features/chat/presentation/pages/admin_chat_dashboard.dart';
 
 class Profile extends StatelessWidget {
   const Profile({super.key});
@@ -12,540 +17,528 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gameProvider = context.watch<GameProvider>();
+    final authViewModel = context.watch<AuthViewModel>();
     final progress = gameProvider.progress;
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
-    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
 
-    // Форматирование очков
-    String formatPoints(int points) {
-      if (points >= 1000) {
-        return '${(points / 1000).toStringAsFixed(1)}K';
-      }
-      return points.toString();
-    }
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF4F6FA);
+    final textColor = isDark ? Colors.white : const Color(0xFF1A1A2E);
 
     return Scaffold(
       backgroundColor: backgroundColor,
-      appBar: AppBar(
-        backgroundColor: backgroundColor,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Профиль",
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
+      body: Stack(
+        children: [
+          // Background Gradient
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: isDark
+                    ? [const Color(0xFF0F0F1A), const Color(0xFF1A1A2E)]
+                    : [const Color(0xFFF4F6FA), const Color(0xFFE0E5EC)],
+              ),
+            ),
           ),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.settings, color: textColor),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const Settings(),
-                ),
-              );
-            },
+
+          SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Column(
+                children: [
+                  const SizedBox(height: 20),
+
+                  // App Bar Replacement
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Профиль",
+                        style: GoogleFonts.sen(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: textColor,
+                        ),
+                      ),
+                      _GlassIconButton(
+                        icon: Icons.settings_rounded,
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => const Settings()),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  /// 👤 Avatar and Level
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF7ED421), Color(0xFF4A90E2)],
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                              color: const Color(
+                                0xFF7ED421,
+                              ).withValues(alpha: 0.3),
+                              blurRadius: 20,
+                              spreadRadius: 2,
+                            ),
+                          ],
+                        ),
+                        child: CircleAvatar(
+                          radius: 55,
+                          backgroundColor: isDark
+                              ? const Color(0xFF1A1A2E)
+                              : Colors.white,
+                          child: Text(
+                            authViewModel.profile?.username
+                                    .substring(0, 1)
+                                    .toUpperCase() ??
+                                "U",
+                            style: GoogleFonts.sen(
+                              fontSize: 40,
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 0,
+                        right: 0,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 5,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFFFD700),
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: [
+                              BoxShadow(
+                                color: const Color(
+                                  0xFFFFD700,
+                                ).withValues(alpha: 0.3),
+                                blurRadius: 10,
+                              ),
+                            ],
+                          ),
+                          child: Text(
+                            "LVL ${progress.level}",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+
+                  Text(
+                    authViewModel.profile?.username ?? "Игрок",
+                    style: GoogleFonts.sen(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
+                  ),
+
+                  const SizedBox(height: 30),
+
+                  // Progress Bar
+                  _GlassContainer(
+                    isDark: isDark,
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "Ваш Прогресс",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: textColor,
+                              ),
+                            ),
+                            Text(
+                              "${progress.totalPoints} pts",
+                              style: const TextStyle(
+                                color: Color(0xFF7ED421),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          height: 10,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: isDark
+                                ? Colors.white.withValues(alpha: 0.05)
+                                : Colors.black.withValues(alpha: 0.05),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: FractionallySizedBox(
+                            alignment: Alignment.centerLeft,
+                            widthFactor: progress.levelProgress,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  colors: [
+                                    Color(0xFF7ED421),
+                                    Color(0xFF4A90E2),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          "До LVL ${progress.level + 1} осталось ${progress.pointsForNextLevel - (progress.totalPoints % progress.pointsForNextLevel)} очков",
+                          style: TextStyle(
+                            color: isDark ? Colors.grey[400] : Colors.grey[600],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Stats Row
+                  Row(
+                    children: [
+                      _CompactStatCard(
+                        title: "Игры",
+                        value: progress.gamesPlayed.toString(),
+                        icon: Icons.sports_esports_rounded,
+                        isDark: isDark,
+                      ),
+                      const SizedBox(width: 12),
+                      _CompactStatCard(
+                        title: "Место",
+                        value: "#12", // TODO: Fetch real rank if possible
+                        icon: Icons.emoji_events_rounded,
+                        isDark: isDark,
+                      ),
+                      const SizedBox(width: 12),
+                      _CompactStatCard(
+                        title: "Точность",
+                        value:
+                            "${(progress.accuracy * 100).toStringAsFixed(0)}%",
+                        icon: Icons.insights_rounded,
+                        isDark: isDark,
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Actions
+                  Column(
+                    children: [
+                      _ActionTile(
+                        icon: Icons.assignment_rounded,
+                        title: "Ежедневные квесты",
+                        subtitle:
+                            "${context.watch<QuestProvider>().completedCount} / ${context.watch<QuestProvider>().totalQuests} выполнено",
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const QuestsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      _ActionTile(
+                        icon: Icons.workspace_premium_rounded,
+                        title: "Достижения",
+                        subtitle:
+                            "${gameProvider.unlockedAchievements.length} / ${gameProvider.allAchievements.length} открыто",
+                        isDark: isDark,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const AchievementsScreen(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      if (authViewModel.profile != null)
+                        _ActionTile(
+                          icon: Icons.support_agent_rounded,
+                          title: authViewModel.profile!.isSupport
+                              ? "Админ Панель"
+                              : "Поддержка",
+                          isDark: isDark,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => authViewModel.profile!.isSupport
+                                    ? const AdminChatDashboard()
+                                    : const UserChatScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      const SizedBox(height: 12),
+                      _ActionTile(
+                        icon: Icons.logout_rounded,
+                        title: "Выйти",
+                        isDark: isDark,
+                        isDestructive: true,
+                        onTap: () async {
+                          await authViewModel.logout();
+                          if (context.mounted) {
+                            Navigator.of(
+                              context,
+                            ).pushReplacementNamed('/login');
+                          }
+                        },
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 100), // Space for bottom nav
+                ],
+              ),
+            ),
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
+    );
+  }
+}
 
-            const SizedBox(height: 30),
+class _GlassIconButton extends StatelessWidget {
+  final IconData icon;
+  final bool isDark;
+  final VoidCallback onTap;
 
-            /// 👤 Avatar
-            Stack(
-              children: [
-                CircleAvatar(
-                  radius: 55,
-                  backgroundColor: const Color(0xFF7ED421),
-                  child: Icon(
-                    Icons.person,
-                    size: 60,
-                    color: Colors.white,
-                  ),
-                ),
-                // Индикатор уровня
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFD700),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      "LVL ${progress.level}",
-                      style: const TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+  const _GlassIconButton({
+    required this.icon,
+    required this.isDark,
+    required this.onTap,
+  });
 
-            const SizedBox(height: 15),
-
-            Text(
-              "Игрок",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: textColor,
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.05)
+                  : Colors.white.withValues(alpha: 0.5),
+              borderRadius: BorderRadius.circular(15),
+              border: Border.all(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.1)
+                    : Colors.white.withValues(alpha: 0.3),
               ),
             ),
-
-            const SizedBox(height: 5),
-
-            // Прогресс до следующего уровня
-            Column(
-              children: [
-                Text(
-                  "${progress.totalPoints} очков",
-                  style: TextStyle(
-                    color: textColor.withOpacity(0.7),
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  width: 150,
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[800] : Colors.grey[300],
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  child: FractionallySizedBox(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: progress.levelProgress,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF7ED421),
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  "До следующего уровня: ${progress.pointsForNextLevel - (progress.totalPoints % progress.pointsForNextLevel)} очков",
-                  style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: 11,
-                  ),
-                ),
-              ],
+            child: Icon(
+              icon,
+              color: isDark ? Colors.white : const Color(0xFF1A1A2E),
+              size: 24,
             ),
-
-            const SizedBox(height: 30),
-
-            Row(
-              children: [
-                _StatCard(
-                  title: "Игры", 
-                  value: progress.gamesPlayed.toString(),
-                  cardColor: cardColor,
-                  textColor: textColor,
-                ),
-                _StatCard(
-                  title: "Очки", 
-                  value: formatPoints(progress.totalPoints),
-                  cardColor: cardColor,
-                  textColor: textColor,
-                ),
-                _StatCard(
-                  title: "Точность", 
-                  value: "${(progress.accuracy * 100).toStringAsFixed(0)}%",
-                  cardColor: cardColor,
-                  textColor: textColor,
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 30),
-
-            _SectionTitle(
-              title: "Достижения", 
-              textColor: textColor,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AchievementsScreen(),
-                  ),
-                );
-              },
-            ),
-
-            const SizedBox(height: 15),
-
-            // Показываем разблокированные ачивки
-            _AchievementsPreview(
-              unlockedCount: gameProvider.unlockedAchievements.length,
-              totalCount: gameProvider.allAchievements.length,
-              cardColor: cardColor,
-              textColor: textColor,
-              isDark: isDark,
-            ),
-
-            const SizedBox(height: 30),
-
-            /// ⚙️ Actions
-            _ActionButton(
-              icon: Icons.emoji_events,
-              text: "Все достижения",
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const AchievementsScreen(),
-                  ),
-                );
-              },
-              cardColor: cardColor,
-              textColor: textColor,
-            ),
-            const SizedBox(height: 12),
-            _QuestsButton(
-              cardColor: cardColor,
-              textColor: textColor,
-            ),
-            const SizedBox(height: 12),
-            _ActionButton(
-              icon: Icons.leaderboard,
-              text: "Таблица лидеров",
-              onTap: () {},
-              cardColor: cardColor,
-              textColor: textColor,
-            ),
-            const SizedBox(height: 12),
-            _ActionButton(
-              icon: Icons.logout,
-              text: "Выйти",
-              isDestructive: true,
-              onTap: () {},
-              cardColor: cardColor,
-              textColor: textColor,
-            ),
-
-            const SizedBox(height: 40),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-/// 📊 Карточка статистики
-class _StatCard extends StatelessWidget {
+class _GlassContainer extends StatelessWidget {
+  final Widget child;
+  final bool isDark;
+  final EdgeInsets padding;
+
+  const _GlassContainer({
+    required this.child,
+    required this.isDark,
+    this.padding = const EdgeInsets.all(24),
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
+            color: isDark
+                ? Colors.white.withValues(alpha: 0.05)
+                : Colors.white.withValues(alpha: 0.7),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(
+              color: isDark
+                  ? Colors.white.withValues(alpha: 0.1)
+                  : Colors.white.withValues(alpha: 0.5),
+            ),
+          ),
+          child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class _CompactStatCard extends StatelessWidget {
   final String title;
   final String value;
-  final Color cardColor;
-  final Color textColor;
-
-  const _StatCard({
-    required this.title, 
-    required this.value,
-    required this.cardColor,
-    required this.textColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 4),
-        padding: const EdgeInsets.symmetric(vertical: 18),
-        decoration: BoxDecoration(
-          color: cardColor,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.04),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          children: [
-            Text(
-              value,
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: textColor,
-              ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 13,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// 🏆 Заголовок секции
-class _SectionTitle extends StatelessWidget {
-  final String title;
-  final Color textColor;
-  final VoidCallback? onTap;
-
-  const _SectionTitle({
-    required this.title, 
-    required this.textColor,
-    this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-            color: textColor,
-          ),
-        ),
-        if (onTap != null)
-          TextButton(
-            onPressed: onTap,
-            child: const Text("Смотреть все"),
-          ),
-      ],
-    );
-  }
-}
-
-// Предпросмотр ачивок
-class _AchievementsPreview extends StatelessWidget {
-  final int unlockedCount;
-  final int totalCount;
-  final Color cardColor;
-  final Color textColor;
+  final IconData icon;
   final bool isDark;
 
-  const _AchievementsPreview({
-    required this.unlockedCount,
-    required this.totalCount,
-    required this.cardColor,
-    required this.textColor,
+  const _CompactStatCard({
+    required this.title,
+    required this.value,
+    required this.icon,
     required this.isDark,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 50,
-            height: 50,
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFD700).withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Center(
-              child: Text("🏆", style: TextStyle(fontSize: 24)),
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "$unlockedCount / $totalCount разблокировано",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  height: 6,
-                  decoration: BoxDecoration(
-                    color: isDark ? Colors.grey[800] : Colors.grey[300],
-                    borderRadius: BorderRadius.circular(3),
-                  ),
-                  child: FractionallySizedBox(
-                    alignment: Alignment.centerLeft,
-                    widthFactor: totalCount > 0 ? unlockedCount / totalCount : 0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFFD700),
-                        borderRadius: BorderRadius.circular(3),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-// Кнопки действий
-class _ActionButton extends StatelessWidget {
-  final IconData icon;
-  final String text;
-  final VoidCallback onTap;
-  final bool isDestructive;
-  final Color cardColor;
-  final Color textColor;
-
-  const _ActionButton({
-    required this.icon,
-    required this.text,
-    required this.onTap,
-    this.isDestructive = false,
-    required this.cardColor,
-    required this.textColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ListTile(
-        onTap: onTap,
-        leading: Icon(
-          icon,
-          color: isDestructive ? Colors.red : textColor,
-        ),
-        title: Text(
-          text,
-          style: TextStyle(
-            color: isDestructive ? Colors.red : textColor,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),
-      ),
-    );
-  }
-}
-
-// Кнопка квестов
-class _QuestsButton extends StatelessWidget {
-  final Color cardColor;
-  final Color textColor;
-
-  const _QuestsButton({
-    required this.cardColor,
-    required this.textColor,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final questProvider = context.watch<QuestProvider>();
-    final completedCount = questProvider.completedCount;
-    final totalCount = questProvider.totalQuests;
-    
-    return Container(
-      decoration: BoxDecoration(
-        color: cardColor,
-        borderRadius: BorderRadius.circular(14),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: ListTile(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const QuestsScreen(),
-            ),
-          );
-        },
-        leading: Stack(
+    return Expanded(
+      child: _GlassContainer(
+        isDark: isDark,
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
+        child: Column(
           children: [
-            Icon(Icons.assignment, color: textColor),
-            if (completedCount < totalCount && completedCount > 0)
-              Positioned(
-                right: -2,
-                top: -2,
-                child: Container(
-                  width: 12,
-                  height: 12,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFFD700),
-                    shape: BoxShape.circle,
-                  ),
-                ),
+            Icon(
+              icon,
+              color: const Color(0xFF7ED421).withValues(alpha: 0.7),
+              size: 20,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              value,
+              style: GoogleFonts.sen(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: isDark ? Colors.white : const Color(0xFF1A1A2E),
               ),
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                color: isDark ? Colors.grey[400] : Colors.grey[600],
+                fontSize: 12,
+              ),
+            ),
           ],
         ),
-        title: Text(
-          "Ежедневные квесты",
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.w500,
-          ),
+      ),
+    );
+  }
+}
+
+class _ActionTile extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final String? subtitle;
+  final bool isDark;
+  final bool isDestructive;
+  final VoidCallback onTap;
+
+  const _ActionTile({
+    required this.icon,
+    required this.title,
+    this.subtitle,
+    required this.isDark,
+    this.isDestructive = false,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: _GlassContainer(
+        isDark: isDark,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: (isDestructive ? Colors.red : const Color(0xFF7ED421))
+                    .withValues(alpha: 0.1),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                icon,
+                color: isDestructive ? Colors.red : const Color(0xFF7ED421),
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: isDestructive
+                          ? Colors.red
+                          : (isDark ? Colors.white : const Color(0xFF1A1A2E)),
+                    ),
+                  ),
+                  if (subtitle != null)
+                    Text(
+                      subtitle!,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: isDark ? Colors.grey[400] : Colors.grey[600],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Icon(
+              Icons.chevron_right_rounded,
+              color: isDark ? Colors.grey[600] : Colors.grey[400],
+            ),
+          ],
         ),
-        subtitle: Text(
-          "$completedCount / $totalCount выполнено",
-          style: TextStyle(
-            color: completedCount == totalCount 
-                ? const Color(0xFF7ED421) 
-                : Colors.grey,
-            fontSize: 12,
-          ),
-        ),
-        trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),
       ),
     );
   }

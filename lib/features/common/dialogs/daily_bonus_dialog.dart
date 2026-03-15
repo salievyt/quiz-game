@@ -40,7 +40,7 @@ class DailyBonusDialog extends StatelessWidget {
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: const Color(0xFFFFD700).withOpacity(0.4),
+                    color: const Color(0xFFFFD700).withValues(alpha: 0.4),
                     blurRadius: 20,
                     spreadRadius: 5,
                   ),
@@ -88,7 +88,7 @@ class DailyBonusDialog extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: isDark 
+                  colors: isDark
                       ? [const Color(0xFF2A2A3E), const Color(0xFF1A1A2E)]
                       : [const Color(0xFFF5F5F5), const Color(0xFFEEEEEE)],
                 ),
@@ -112,12 +112,18 @@ class DailyBonusDialog extends StatelessWidget {
             ),
 
             // Бонус за серию
-            if (newStreak == 3 || newStreak == 7 || newStreak == 14 || newStreak == 30) ...[
+            if (newStreak == 3 ||
+                newStreak == 7 ||
+                newStreak == 14 ||
+                newStreak == 30) ...[
               const SizedBox(height: 16),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFD700).withOpacity(0.2),
+                  color: const Color(0xFFFFD700).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Row(
@@ -175,10 +181,8 @@ class DailyBonusWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bonusProvider = context.watch<DailyBonusProvider>();
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black87;
+
+    // cardColor and textColor were unused here
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -191,7 +195,7 @@ class DailyBonusWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFFFFD700).withOpacity(0.3),
+            color: const Color(0xFFFFD700).withValues(alpha: 0.3),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -204,7 +208,7 @@ class DailyBonusWidget extends StatelessWidget {
             width: 50,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withValues(alpha: 0.2),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Center(
@@ -215,7 +219,7 @@ class DailyBonusWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          
+
           // Информация
           Expanded(
             child: Column(
@@ -232,15 +236,12 @@ class DailyBonusWidget extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   "🔥 ${bonusProvider.currentStreak} дней подряд",
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white70,
-                  ),
+                  style: const TextStyle(fontSize: 14, color: Colors.white70),
                 ),
               ],
             ),
           ),
-          
+
           // Бонус
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -255,10 +256,7 @@ class DailyBonusWidget extends StatelessWidget {
               ),
               const Text(
                 "сегодня",
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.white70,
-                ),
+                style: TextStyle(fontSize: 12, color: Colors.white70),
               ),
             ],
           ),

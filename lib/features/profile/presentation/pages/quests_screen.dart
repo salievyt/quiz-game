@@ -9,8 +9,10 @@ class QuestsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final questProvider = context.watch<QuestProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF8F9FB);
     final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
 
@@ -22,10 +24,7 @@ class QuestsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Ежедневные квесты",
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: textColor),
@@ -74,11 +73,14 @@ class QuestsScreen extends StatelessWidget {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(4),
                         child: LinearProgressIndicator(
-                          value: questProvider.totalQuests > 0 
-                              ? questProvider.completedCount / questProvider.totalQuests 
+                          value: questProvider.totalQuests > 0
+                              ? questProvider.completedCount /
+                                    questProvider.totalQuests
                               : 0,
                           backgroundColor: Colors.white24,
-                          valueColor: const AlwaysStoppedAnimation(Colors.white),
+                          valueColor: const AlwaysStoppedAnimation(
+                            Colors.white,
+                          ),
                           minHeight: 6,
                         ),
                       ),
@@ -97,7 +99,7 @@ class QuestsScreen extends StatelessWidget {
                 final quest = questProvider.todayQuests[index];
                 final progress = questProvider.getQuestProgress(quest);
                 final isCompleted = questProvider.isQuestCompleted(quest.id);
-                
+
                 return _QuestCard(
                   quest: quest,
                   progress: progress,
@@ -135,19 +137,19 @@ class _QuestCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final percent = (progress / quest.requirement).clamp(0.0, 1.0);
-    
+
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: isCompleted 
+        border: isCompleted
             ? Border.all(color: const Color(0xFF7ED421), width: 2)
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -162,7 +164,7 @@ class _QuestCard extends StatelessWidget {
                 width: 50,
                 height: 50,
                 decoration: BoxDecoration(
-                  color: isCompleted 
+                  color: isCompleted
                       ? const Color(0xFF7ED421)
                       : (isDark ? Colors.grey[800] : Colors.grey[200]),
                   borderRadius: BorderRadius.circular(12),
@@ -175,7 +177,7 @@ class _QuestCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 16),
-              
+
               // Информация
               Expanded(
                 child: Column(
@@ -190,19 +192,21 @@ class _QuestCard extends StatelessWidget {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: textColor,
-                              decoration: isCompleted 
-                                  ? TextDecoration.lineThrough 
+                              decoration: isCompleted
+                                  ? TextDecoration.lineThrough
                                   : null,
                             ),
                           ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
-                            horizontal: 8, 
+                            horizontal: 8,
                             vertical: 4,
                           ),
                           decoration: BoxDecoration(
-                            color: const Color(0xFFFFD700).withOpacity(0.2),
+                            color: const Color(
+                              0xFFFFD700,
+                            ).withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(
@@ -228,7 +232,7 @@ class _QuestCard extends StatelessWidget {
                       quest.description,
                       style: TextStyle(
                         fontSize: 13,
-                        color: textColor.withOpacity(0.6),
+                        color: textColor.withValues(alpha: 0.6),
                       ),
                     ),
                   ],
@@ -236,9 +240,9 @@ class _QuestCard extends StatelessWidget {
               ),
             ],
           ),
-          
+
           const SizedBox(height: 12),
-          
+
           // Прогресс бар
           Row(
             children: [
@@ -247,10 +251,12 @@ class _QuestCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(4),
                   child: LinearProgressIndicator(
                     value: percent,
-                    backgroundColor: isDark ? Colors.grey[800] : Colors.grey[300],
+                    backgroundColor: isDark
+                        ? Colors.grey[800]
+                        : Colors.grey[300],
                     valueColor: AlwaysStoppedAnimation(
-                      isCompleted 
-                          ? const Color(0xFF7ED421) 
+                      isCompleted
+                          ? const Color(0xFF7ED421)
                           : const Color(0xFFFFD700),
                     ),
                     minHeight: 6,
@@ -263,7 +269,7 @@ class _QuestCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
-                  color: textColor.withOpacity(0.6),
+                  color: textColor.withValues(alpha: 0.6),
                 ),
               ),
             ],

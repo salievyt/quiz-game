@@ -1,11 +1,11 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:quiz/l10n/app_localizations.dart';
 
 import 'package:quiz/features/home/presentation/pages/quiz.dart';
 import 'package:quiz/features/leaderboards/presentation/pages/leaderboards.dart';
 import 'package:quiz/features/statistics/presentation/pages/statistics.dart';
-import 'package:quiz/features/pet/presentation/pages/pet_screen.dart';
 import 'package:quiz/features/profile/presentation/pages/profile.dart';
 
 class Navigation extends StatefulWidget {
@@ -14,89 +14,88 @@ class Navigation extends StatefulWidget {
   @override
   State<Navigation> createState() => _NavigationState();
 }
+
 int _currentIndex = 0;
-void setPage(int index){
+void setPage(int index) {
   _currentIndex = index;
 }
 
 class _NavigationState extends State<Navigation> {
-
   final List<Widget> _pages = [
-    Quiz(),
-    Leaderboards(),
-    StatisticsScreen(),
-    PetScreen(),
-    Profile(),
+    const Quiz(),
+    const Leaderboards(),
+    const StatisticsScreen(),
+    const Profile(),
   ];
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
-    final textColor = isDark ? Colors.white : Colors.black;
-    final shadowColor = Colors.black.withValues(alpha: isDark ? 0.3 : 0.1);
+    final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
-      ),
+      extendBody:
+          true, // This allows the body to be shown behind the navigation bar
+      body: IndexedStack(index: _currentIndex, children: _pages),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: shadowColor,
-            )
-          ],
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              rippleColor: isDark ? Colors.grey[700]! : Colors.grey[300]!,
-              hoverColor: isDark ? Colors.grey[800]! : Colors.grey[100]!,
-              gap: 8,
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Color(0xFF7ED421)!,
-              color: isDark ? Colors.grey[400]! : Colors.black,
-              tabs: [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Главная',
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 25),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(30),
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: isDark
+                    ? Colors.white.withValues(alpha: 0.08)
+                    : Colors.white.withValues(alpha: 0.8),
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(
+                  color: isDark
+                      ? Colors.white.withValues(alpha: 0.1)
+                      : Colors.white.withValues(alpha: 0.3),
                 ),
-                GButton(
-                  icon: Icons.leaderboard,
-                  text: 'Топ',
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: GNav(
+                rippleColor: const Color(0xFF7ED421).withValues(alpha: 0.2),
+                hoverColor: const Color(0xFF7ED421).withValues(alpha: 0.1),
+                gap: 8,
+                activeColor: Colors.white,
+                iconSize: 22,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
                 ),
-                GButton(
-                  icon: Icons.donut_large,
-                  text: 'Стат',
-                ),
-                GButton(
-                  icon: Icons.pets,
-                  text: 'Питомец',
-                ),
-                GButton(
-                  icon: Icons.person,
-                  text: 'Профиль',
-                ),
-              ],
-              selectedIndex: _currentIndex,
-              onTabChange: (index) {
-                setState(() {
-                  _currentIndex = index;
-                });
-              },
+                duration: const Duration(milliseconds: 400),
+                tabBackgroundColor: const Color(0xFF7ED421),
+                color: isDark ? Colors.grey[400]! : Colors.grey[600]!,
+                tabs: [
+                  GButton(icon: Icons.grid_view_rounded, text: l10n.home),
+                  GButton(
+                    icon: Icons.emoji_events_rounded,
+                    text: l10n.leaderboards,
+                  ),
+                  GButton(icon: Icons.bar_chart_rounded, text: l10n.statistics),
+                  GButton(icon: Icons.person_rounded, text: l10n.profile),
+                ],
+                selectedIndex: _currentIndex,
+                onTabChange: (index) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
+              ),
             ),
           ),
         ),
-      )
+      ),
     );
   }
 }

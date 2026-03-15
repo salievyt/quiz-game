@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 import 'package:quiz/ui/providers/theme_provider.dart';
 import 'package:quiz/ui/services/sound_manager.dart';
 import 'package:quiz/core/providers/locale_provider.dart';
@@ -28,10 +29,13 @@ class _SettingsState extends State<Settings> {
 
   @override
   Widget build(BuildContext context) {
+    final authViewModel = context.watch<AuthViewModel>();
     final themeProvider = context.watch<ThemeProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF8F9FB);
     final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
 
@@ -43,10 +47,7 @@ class _SettingsState extends State<Settings> {
         centerTitle: true,
         title: Text(
           "Настройки",
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: textColor),
@@ -56,7 +57,6 @@ class _SettingsState extends State<Settings> {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
         children: [
-
           _sectionTitle("Аккаунт", textColor),
           _settingsTile(
             icon: Icons.person,
@@ -134,12 +134,14 @@ class _SettingsState extends State<Settings> {
             icon: Icons.language,
             title: "Язык",
             subtitle: context.watch<LocaleProvider>().getLocaleName(
-              context.watch<LocaleProvider>().locale.languageCode
+              context.watch<LocaleProvider>().locale.languageCode,
             ),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const LanguageSettingsScreen()),
+                MaterialPageRoute(
+                  builder: (_) => const LanguageSettingsScreen(),
+                ),
               );
             },
             cardColor: cardColor,
@@ -151,7 +153,7 @@ class _SettingsState extends State<Settings> {
           _sectionTitle("О приложении", textColor),
           _settingsTile(
             icon: Icons.info_outline,
-            title: "Версия 2.0.0",
+            title: "Версия 2.1.0",
             onTap: () {},
             cardColor: cardColor,
             textColor: textColor,
@@ -164,14 +166,16 @@ class _SettingsState extends State<Settings> {
                 context: context,
                 builder: (_) => AlertDialog(
                   title: const Text("Политика конфиденциальности"),
-                  content: const Text("Вы принимаете условия политики конфиденциальности"),
+                  content: const Text(
+                    "Вы принимаете условия политики конфиденциальности",
+                  ),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
                       child: const Text("Отмена"),
                     ),
-                  ]
-                )
+                  ],
+                ),
               );
             },
             cardColor: cardColor,
@@ -180,7 +184,7 @@ class _SettingsState extends State<Settings> {
 
           const SizedBox(height: 30),
 
-          _dangerButton(cardColor),
+          _dangerButton(cardColor, authViewModel),
 
           const SizedBox(height: 40),
         ],
@@ -227,7 +231,15 @@ class _SettingsState extends State<Settings> {
         onTap: onTap,
         leading: Icon(icon, color: textColor),
         title: Text(title, style: TextStyle(color: textColor)),
-        subtitle: subtitle != null ? Text(subtitle, style: TextStyle(color: textColor.withValues(alpha: 0.6), fontSize: 12)) : null,
+        subtitle: subtitle != null
+            ? Text(
+                subtitle,
+                style: TextStyle(
+                  color: textColor.withValues(alpha: 0.6),
+                  fontSize: 12,
+                ),
+              )
+            : null,
         trailing: Icon(Icons.arrow_forward_ios, size: 16, color: textColor),
       ),
     );
@@ -248,7 +260,7 @@ class _SettingsState extends State<Settings> {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -260,11 +272,12 @@ class _SettingsState extends State<Settings> {
         secondary: Icon(icon, color: textColor),
         title: Text(title, style: TextStyle(color: textColor)),
         activeColor: const Color(0xFF7ED421),
+        activeTrackColor: const Color(0xFF7ED421).withValues(alpha: 0.5),
       ),
     );
   }
 
-  Widget _dangerButton(Color cardColor) {
+  Widget _dangerButton(Color cardColor, AuthViewModel authViewModel) {
     return GestureDetector(
       onTap: () {
         showDialog(
@@ -274,15 +287,17 @@ class _SettingsState extends State<Settings> {
             content: const Text("Вы уверены, что хотите выйти?"),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () async {
+                  await authViewModel.logout();
+                  if (context.mounted) {
+                    Navigator.of(context).pushReplacementNamed('/login');
+                  }
+                },
                 child: const Text("Отмена"),
               ),
               TextButton(
                 onPressed: () {},
-                child: const Text(
-                  "Выйти",
-                  style: TextStyle(color: Colors.red),
-                ),
+                child: const Text("Выйти", style: TextStyle(color: Colors.red)),
               ),
             ],
           ),
@@ -297,10 +312,7 @@ class _SettingsState extends State<Settings> {
         child: const Center(
           child: Text(
             "Выйти из аккаунта",
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
           ),
         ),
       ),

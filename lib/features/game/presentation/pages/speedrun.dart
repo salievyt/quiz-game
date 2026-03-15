@@ -9,6 +9,10 @@ import 'package:my_progress_bar/progress_bar.dart';
 import 'package:quiz/data/models/question.dart';
 import 'package:quiz/data/gamedata.dart';
 import 'package:quiz/ui/utils/result_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz/ui/providers/game_provider.dart';
+import 'package:quiz/ui/providers/coins_provider.dart';
+import 'package:quiz/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 
 class Speedrun extends StatefulWidget {
   const Speedrun({super.key});
@@ -36,9 +40,9 @@ class _SpeedrunState extends State<Speedrun> {
     _startTimer();
   }
 
-  void _loadQuestions() {
+  Future<void> _loadQuestions() async {
     // Берём ВСЕ вопросы из GameData
-    _questions = GameData.getQuiz(12);
+    _questions = await GameData.getQuiz(12);
     _questions.shuffle();
 
     // Перемешиваем ответы
@@ -81,11 +85,32 @@ class _SpeedrunState extends State<Speedrun> {
     _timer.cancel();
     _isGameOver = true;
 
+    final points = _score * 2; // Speedrun reward logic
+    final gameProvider = context.read<GameProvider>();
+    final coinsProvider = context.read<CoinsProvider>();
+    final authViewModel = context.read<AuthViewModel>();
+
+    final earnedCoins = gameProvider.calculateCoins(points);
+
+    // Local update
+    gameProvider.finishGame(
+      correctAnswers: _score,
+      totalAnswers: _score, // simplified for speedrun
+      isPerfect: false,
+    );
+
+    if (earnedCoins > 0) {
+      coinsProvider.addCoins(earnedCoins);
+    }
+
+    // Backend update
+    if (authViewModel.isAuthenticated) {
+      authViewModel.updateScores(points, earnedCoins);
+    }
+
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(
-        builder: (_) => ResultScreen(score: _score),
-      ),
+      MaterialPageRoute(builder: (_) => ResultScreen(score: _score)),
     );
   }
 
@@ -149,8 +174,10 @@ class _SpeedrunState extends State<Speedrun> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF8F9FB);
     final textColor = isDark ? Colors.white : Colors.black87;
 
     if (_questions.isEmpty) {
@@ -165,10 +192,7 @@ class _SpeedrunState extends State<Speedrun> {
         ),
         backgroundColor: backgroundColor,
         body: Center(
-          child: Text(
-            "Нет вопросов",
-            style: TextStyle(color: textColor),
-          ),
+          child: Text("Нет вопросов", style: TextStyle(color: textColor)),
         ),
       );
     }
@@ -179,10 +203,7 @@ class _SpeedrunState extends State<Speedrun> {
       backgroundColor: backgroundColor,
       appBar: AppBar(
         backgroundColor: backgroundColor,
-        title: Text(
-          "Speedrun",
-          style: TextStyle(color: textColor),
-        ),
+        title: Text("Speedrun", style: TextStyle(color: textColor)),
         centerTitle: true,
         leading: IconButton(
           onPressed: _showExitDialog,
@@ -204,7 +225,9 @@ class _SpeedrunState extends State<Speedrun> {
                     thumbColor: const Color(0xFF7ED421),
                     trackHeight: 10,
                     bufferedPosition: 60,
-                    bufferedColor: isDark ? Colors.grey[800]! : const Color(0xFFEBEBEB),
+                    bufferedColor: isDark
+                        ? Colors.grey[800]!
+                        : const Color(0xFFEBEBEB),
                     onChanged: (_) {},
                   ),
                 ),
@@ -213,10 +236,7 @@ class _SpeedrunState extends State<Speedrun> {
                   backgroundColor: const Color(0xFF7ED421),
                   child: Text(
                     "$_timeBack",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ],
@@ -241,7 +261,7 @@ class _SpeedrunState extends State<Speedrun> {
             Column(
               children: List.generate(
                 question.answers.length,
-                    (index) => Padding(
+                (index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: ElevatedButton(
                     onPressed: () => _checkAnswer(index),

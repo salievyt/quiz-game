@@ -2,16 +2,15 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz/data/gamedata.dart';
+import 'package:quiz/features/game/domain/quiz_repository.dart';
 import 'package:quiz/data/models/question.dart';
 import 'package:quiz/models/achievement.dart';
 import 'package:quiz/ui/providers/game_provider.dart';
 import 'package:quiz/ui/providers/quest_provider.dart';
-import 'package:quiz/ui/providers/coins_provider.dart';
-import 'package:quiz/ui/providers/pet_provider.dart';
 import 'package:quiz/ui/services/sound_manager.dart';
 import 'package:quiz/features/common/dialogs/achievement_dialog.dart';
 import 'package:my_progress_bar/progress_bar.dart';
+import 'package:quiz/features/auth/presentation/viewmodels/auth_viewmodel.dart';
 
 class Game extends StatefulWidget {
   final int ID;
@@ -28,6 +27,7 @@ class _GameState extends State<Game> {
   final SoundManager _soundManager = SoundManager();
   int? _selectedAnswer;
   bool _answered = false;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -35,22 +35,50 @@ class _GameState extends State<Game> {
     _loadQuestions();
   }
 
-  void _loadQuestions() {
-    _questions = GameData.getQuiz(widget.ID);
+  Future<void> _loadQuestions() async {
+    setState(() {
+      _isLoading = true;
+    });
 
-    if (_questions.isEmpty) return;
+    try {
+      final quizRepository = context.read<QuizRepository>();
+      _questions = await quizRepository.getQuestions(widget.ID);
 
-    _questions.shuffle();
-    _questions = _questions.take(12).toList();
+      if (_questions.isEmpty) {
+        if (mounted) {
+          setState(() {
+            _isLoading = false;
+          });
+        }
+        return;
+      }
 
-    for (var q in _questions) {
-      q.shuffleAnswers();
+      _questions.shuffle();
+      _questions = _questions.take(12).toList();
+
+      for (var q in _questions) {
+        q.shuffleAnswers();
+      }
+
+      if (mounted) {
+        setState(() {
+          _currentIndex = 0;
+          _score = 0;
+          _selectedAnswer = null;
+          _answered = false;
+          _isLoading = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Ошибка загрузки: $e")));
+      }
     }
-
-    _currentIndex = 0;
-    _score = 0;
-    _selectedAnswer = null;
-    _answered = false;
   }
 
   void _checkAnswer(int selectedIndex) {
@@ -62,7 +90,7 @@ class _GameState extends State<Game> {
     });
 
     final isCorrect = selectedIndex == _questions[_currentIndex].correctIndex;
-    
+
     if (isCorrect) {
       _score++;
       _soundManager.play(SoundType.correct);
@@ -85,13 +113,12 @@ class _GameState extends State<Game> {
 
   Future<void> _finishGame() async {
     _soundManager.play(SoundType.gameOver);
-    
+
     final isPerfect = _score == _questions.length;
     final gameProvider = context.read<GameProvider>();
     final questProvider = context.read<QuestProvider>();
-    final coinsProvider = context.read<CoinsProvider>();
     final points = _score * 10 + (isPerfect ? 50 : 0);
-    
+
     // Начисляем очки
     await gameProvider.finishGame(
       correctAnswers: _score,
@@ -101,8 +128,11 @@ class _GameState extends State<Game> {
 
     // Начисляем монеты (баллы / 10)
     final earnedCoins = gameProvider.calculateCoins(points);
-    if (earnedCoins > 0) {
-      await coinsProvider.addCoins(earnedCoins);
+
+    // Синхронизация с бэкендом
+    final authViewModel = context.read<AuthViewModel>();
+    if (authViewModel.isAuthenticated) {
+      await authViewModel.updateScores(points, earnedCoins);
     }
 
     // Обновляем прогресс квестов
@@ -117,11 +147,16 @@ class _GameState extends State<Game> {
 
     if (mounted) {
       // Показываем результат с монетами
-      _showResultWithCoins(points, earnedCoins, isPerfect, newAchievements, questReward);
+      _showResultWithCoins(points, isPerfect, newAchievements, questReward);
     }
   }
 
-  void _showResultWithCoins(int points, int coins, bool isPerfect, List<Achievement> achievements, int questReward) {
+  void _showResultWithCoins(
+    int points,
+    bool isPerfect,
+    List<Achievement> achievements,
+    int questReward,
+  ) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final textColor = isDark ? Colors.white : Colors.black87;
 
@@ -146,8 +181,6 @@ class _GameState extends State<Game> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 _ResultBadge(icon: "⭐", value: "+$points", label: "очков"),
-                const SizedBox(width: 12),
-                _ResultBadge(icon: "🪙", value: "+$coins", label: "монет"),
               ],
             ),
             if (questReward > 0) ...[
@@ -155,11 +188,13 @@ class _GameState extends State<Game> {
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFD700).withOpacity(0.2),
+                  color: const Color(0xFFFFD700).withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text("🎁 +$questReward за квесты!", 
-                  style: const TextStyle(color: Color(0xFFFFD700))),
+                child: Text(
+                  "🎁 +$questReward за квесты!",
+                  style: const TextStyle(color: Color(0xFFFFD700)),
+                ),
               ),
             ],
           ],
@@ -190,11 +225,15 @@ class _GameState extends State<Game> {
   }
 
   // Виджет для отображения очков/монет в результатах
-  Widget _ResultBadge({required String icon, required String value, required String label}) {
+  Widget _ResultBadge({
+    required String icon,
+    required String value,
+    required String label,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
-        color: const Color(0xFF7ED421).withOpacity(0.1),
+        color: const Color(0xFF7ED421).withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -213,10 +252,7 @@ class _GameState extends State<Game> {
               ),
             ],
           ),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
-          ),
+          Text(label, style: const TextStyle(fontSize: 12, color: Colors.grey)),
         ],
       ),
     );
@@ -329,7 +365,7 @@ class _GameState extends State<Game> {
   void _showCupertinoResult() {
     final isPerfect = _score == _questions.length;
     final points = _score * 10 + (isPerfect ? 50 : 0);
-    
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -373,7 +409,7 @@ class _GameState extends State<Game> {
   void _showMaterialResult() {
     final isPerfect = _score == _questions.length;
     final points = _score * 10 + (isPerfect ? 50 : 0);
-    
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -418,23 +454,33 @@ class _GameState extends State<Game> {
 
   Color _getAnswerColor(int index) {
     if (!_answered) return const Color(0xFF7ED421);
-    
+
     final correctIndex = _questions[_currentIndex].correctIndex;
-    
+
     if (index == correctIndex) {
       return Colors.green;
     } else if (index == _selectedAnswer) {
       return Colors.red;
     }
-    return Colors.grey.withOpacity(0.3);
+    return Colors.grey.withValues(alpha: 0.3);
   }
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
-    final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF8F9FB);
     final textColor = isDark ? Colors.white : Colors.black87;
+
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: backgroundColor,
+        body: const Center(
+          child: CircularProgressIndicator(color: Color(0xFF7ED421)),
+        ),
+      );
+    }
 
     if (_questions.isEmpty) {
       return Scaffold(
@@ -458,10 +504,6 @@ class _GameState extends State<Game> {
     }
 
     final question = _questions[_currentIndex];
-
-    // Получаем питомца
-    final petProvider = context.watch<PetProvider>();
-    final pet = petProvider.currentPet;
 
     return Scaffold(
       backgroundColor: backgroundColor,
@@ -501,28 +543,7 @@ class _GameState extends State<Game> {
                   backgroundColor: const Color(0xFF7ED421),
                   child: Text(
                     "${_currentIndex + 1}",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            const SizedBox(height: 20),
-
-            // Питомец
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(pet.emoji, style: const TextStyle(fontSize: 32)),
-                const SizedBox(width: 8),
-                Text(
-                  "Смотрит за тобой!",
-                  style: TextStyle(
-                    color: textColor.withOpacity(0.6),
-                    fontSize: 14,
+                    style: const TextStyle(color: Colors.white, fontSize: 18),
                   ),
                 ),
               ],
@@ -545,7 +566,7 @@ class _GameState extends State<Game> {
             Column(
               children: List.generate(
                 question.answers.length,
-                    (index) => Padding(
+                (index) => Padding(
                   padding: const EdgeInsets.symmetric(vertical: 6),
                   child: ElevatedButton(
                     onPressed: _answered ? null : () => _checkAnswer(index),
@@ -572,8 +593,6 @@ class _GameState extends State<Game> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(pet.emoji, style: const TextStyle(fontSize: 24)),
-                const SizedBox(width: 8),
                 Text(
                   "Очки: $_score",
                   style: TextStyle(

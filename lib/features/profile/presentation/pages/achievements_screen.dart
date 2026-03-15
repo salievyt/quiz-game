@@ -10,15 +10,19 @@ class AchievementsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final gameProvider = context.watch<GameProvider>();
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    
-    final backgroundColor = isDark ? const Color(0xFF0F0F1A) : const Color(0xFFF8F9FB);
+
+    final backgroundColor = isDark
+        ? const Color(0xFF0F0F1A)
+        : const Color(0xFFF8F9FB);
     final cardColor = isDark ? const Color(0xFF1A1A2E) : Colors.white;
     final textColor = isDark ? Colors.white : Colors.black;
 
     // Группируем ачивки по категориям
     final groupedAchievements = <AchievementType, List<Achievement>>{};
     for (final achievement in Achievement.all) {
-      groupedAchievements.putIfAbsent(achievement.type, () => []).add(achievement);
+      groupedAchievements
+          .putIfAbsent(achievement.type, () => [])
+          .add(achievement);
     }
 
     return Scaffold(
@@ -29,10 +33,7 @@ class AchievementsScreen extends StatelessWidget {
         centerTitle: true,
         title: Text(
           "Достижения",
-          style: TextStyle(
-            color: textColor,
-            fontWeight: FontWeight.bold,
-          ),
+          style: TextStyle(color: textColor, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new, color: textColor),
@@ -71,10 +72,7 @@ class AchievementsScreen extends StatelessWidget {
                       ),
                       const Text(
                         "достижений разблокировано",
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.white70,
-                        ),
+                        style: TextStyle(fontSize: 14, color: Colors.white70),
                       ),
                     ],
                   ),
@@ -102,9 +100,13 @@ class AchievementsScreen extends StatelessWidget {
                       ),
                     ),
                     ...entry.value.map((achievement) {
-                      final isUnlocked = gameProvider.isAchievementUnlocked(achievement.id);
-                      final progress = gameProvider.getAchievementProgress(achievement);
-                      
+                      final isUnlocked = gameProvider.isAchievementUnlocked(
+                        achievement.id,
+                      );
+                      final progress = gameProvider.getAchievementProgress(
+                        achievement,
+                      );
+
                       return _AchievementCard(
                         achievement: achievement,
                         isUnlocked: isUnlocked,
@@ -175,7 +177,7 @@ class _AchievementCard extends StatelessWidget {
             : null,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -190,8 +192,8 @@ class _AchievementCard extends StatelessWidget {
             decoration: BoxDecoration(
               color: isUnlocked
                   ? (achievement.isRare
-                      ? const Color(0xFFFFD700)
-                      : const Color(0xFF7ED421))
+                        ? const Color(0xFFFFD700)
+                        : const Color(0xFF7ED421))
                   : (isDark ? Colors.grey[800] : Colors.grey[300]),
               borderRadius: BorderRadius.circular(12),
             ),
@@ -202,7 +204,7 @@ class _AchievementCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 16),
-          
+
           // Информация
           Expanded(
             child: Column(
@@ -213,7 +215,9 @@ class _AchievementCard extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
-                    color: isUnlocked ? textColor : textColor.withOpacity(0.5),
+                    color: isUnlocked
+                        ? textColor
+                        : textColor.withValues(alpha: 0.5),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -221,7 +225,7 @@ class _AchievementCard extends StatelessWidget {
                   achievement.description,
                   style: TextStyle(
                     fontSize: 13,
-                    color: textColor.withOpacity(0.6),
+                    color: textColor.withValues(alpha: 0.6),
                   ),
                 ),
                 if (!isUnlocked) ...[
@@ -230,10 +234,12 @@ class _AchievementCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: progress,
-                      backgroundColor: isDark ? Colors.grey[800] : Colors.grey[300],
+                      backgroundColor: isDark
+                          ? Colors.grey[800]
+                          : Colors.grey[300],
                       valueColor: AlwaysStoppedAnimation(
-                        achievement.isRare 
-                            ? const Color(0xFFFFD700) 
+                        achievement.isRare
+                            ? const Color(0xFFFFD700)
                             : const Color(0xFF7ED421),
                       ),
                       minHeight: 4,
@@ -243,13 +249,13 @@ class _AchievementCard extends StatelessWidget {
               ],
             ),
           ),
-          
+
           // Статус
           if (isUnlocked)
             Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: Colors.green.withValues(alpha: 0.1),
                 shape: BoxShape.circle,
               ),
               child: const Icon(Icons.check, color: Colors.green, size: 20),
